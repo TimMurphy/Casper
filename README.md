@@ -1,2 +1,3 @@
 # Casper
-Casper is a simple website &amp; blogging engine.
+
+Casper is a simple website & blogging engine.
