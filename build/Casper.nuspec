@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>Casper</id>
+        <version>$version$</version>
+        <title>Casper</title>
+        <authors>Tim Murphy</authors>
+        <owners>Tim Murphy</owners>
+        <licenseUrl>https://github.com/TimMurphy/Casper/blob/master/LICENSE.txt</licenseUrl>
+        <projectUrl>https://github.com/TimMurphy/Casper</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Casper is a simple website &amp; blogging engine.</description>
+        <copyright>Copyright (c) 2015 Tim Murphy</copyright>
+    </metadata>
+    <files>
+        <file src="..\artifacts\bin\Casper.*" target="lib/net45"/>
+    </files>
+</package>
