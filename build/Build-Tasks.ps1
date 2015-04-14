@@ -33,8 +33,6 @@ Task Validate-Properties {
     Assert (-not [string]::IsNullOrWhitespace($configuration)) "configuration is required."
     Assert (Test-Path $packages) "packages '$packages' does not exist."
     Assert (Test-Path $nuGet) "nuGet '$nuGet' does not exist."
-    Assert (Test-Path $specFlowToolsFolder) "specFlowToolsFolder '$specFlowToolsFolder' does not exist."
-    Assert (Test-Path $specFlow) "specFlow '$specFlow' does not exist."
     Assert (Test-Path $tests) "tests '$tests' does not exist."
 
     Write-Host "Successfully validated properties."
