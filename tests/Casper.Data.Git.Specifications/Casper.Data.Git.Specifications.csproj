@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\LibGit2Sharp.0.21.0.176\build\net40\LibGit2Sharp.props" Condition="Exists('..\..\packages\LibGit2Sharp.0.21.0.176\build\net40\LibGit2Sharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{548321D4-4F63-4DB2-AA25-AB9DCC595EEB}</ProjectGuid>
+    <ProjectGuid>{B514ABC1-E834-42E3-9FC5-8620EA881709}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Casper.Domain.Specifications</RootNamespace>
-    <AssemblyName>Casper.Domain.Specifications</AssemblyName>
+    <RootNamespace>Casper.Data.Git.Specifications</RootNamespace>
+    <AssemblyName>Casper.Data.Git.Specifications</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>d6cd48ed</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>6fe7a9fe</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,9 +34,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Anotar.LibLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Anotar.LibLog.Fody.2.16.3\Lib\Anotar.LibLog.dll</HintPath>
+    <Reference Include="Anotar.NLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Anotar.NLog.Fody.2.16.3\Lib\Anotar.NLog.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FakeItEasy, Version=1.25.2.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FakeItEasy.1.25.2\lib\net40\FakeItEasy.dll</HintPath>
@@ -49,15 +54,25 @@
       <HintPath>..\..\packages\FluentAssertions.3.3.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="LibGit2Sharp, Version=0.21.0.176, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LibGit2Sharp.0.21.0.176\lib\net40\LibGit2Sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=3.2.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OpenMagic, Version=1.18.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OpenMagic.1.18.0\lib\net45\OpenMagic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
       <Private>True</Private>
@@ -75,42 +90,40 @@
     <Compile Include="..\..\source\Casper.Core\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="App_Packages\LibLog.3.1\LibLog.cs" />
-    <Compile Include="Features\Configuration.feature.cs">
-      <DependentUpon>Configuration.feature</DependentUpon>
+    <Compile Include="Features\Git\GitRepository.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>GitRepository.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Infrastructure\Messaging\EventBus.feature.cs">
-      <DependentUpon>EventBus.feature</DependentUpon>
+    <Compile Include="Features\Repositories\Steps\BlogPostRepositorySteps.cs" />
+    <Compile Include="Features\Repositories\BlogPostRepository.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>BlogPostRepository.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Infrastructure\Messaging\CommandBus.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CommandBus.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Infrastructure\SlugFactory.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SlugFactory.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Helpers\ActualData.cs" />
-    <Compile Include="Features\Infrastructure\Steps\SlugFactorySteps.cs" />
-    <Compile Include="Features\BlogPosts\Steps\PublishBlogPostSteps.cs" />
-    <Compile Include="Features\BlogPosts\PublishBlogPost.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PublishBlogPost.feature</DependentUpon>
-    </Compile>
+    <Compile Include="Features\Git\Steps\GitRepositorySteps.cs" />
     <Compile Include="Helpers\Dummies\Dummy.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\ActualData.cs" />
+    <Compile Include="Helpers\StaticClock.cs" />
     <Compile Include="Helpers\GivenData.cs" />
-    <Compile Include="Steps\SetupSteps.cs" />
+    <Compile Include="Helpers\IBlogPostRepositoryExtensions.cs" />
+    <Compile Include="Helpers\IObjectContainerExtensions.cs" />
+    <Compile Include="Helpers\InvocationRecorder.cs" />
+    <Compile Include="Helpers\ScenarioHelpers.cs" />
+    <Compile Include="Helpers\SetupSteps.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
+    <None Include="App.config" />
+    <None Include="Features\Git\GitRepository.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GitRepository.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Repositories\BlogPostRepository.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BlogPostRepository.feature.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\source\Casper.Core\Casper.Core.csproj">
@@ -122,45 +135,22 @@
       <Name>Casper.Data.Git</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\source\Casper.Domain\Casper.Domain.csproj">
-      <Project>{30C2B8B0-F92C-4E1B-88DD-65DC4081498C}</Project>
+      <Project>{30c2b8b0-f92c-4e1b-88dd-65dc4081498c}</Project>
       <Name>Casper.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Features\BlogPosts\PublishBlogPost.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PublishBlogPost.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Configuration.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Configuration.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Infrastructure\Messaging\EventBus.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>EventBus.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Infrastructure\Messaging\CommandBus.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>CommandBus.feature.cs</LastGenOutput>
-    </None>
-    <None Include="Features\Infrastructure\SlugFactory.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>SlugFactory.feature.cs</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Steps\BlogPosts\" />
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\LibGit2Sharp.0.21.0.176\build\net40\LibGit2Sharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\LibGit2Sharp.0.21.0.176\build\net40\LibGit2Sharp.props'))" />
     <Error Condition="!Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.28.3\build\Fody.targets'))" />
   </Target>
+  <Import Project="..\..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

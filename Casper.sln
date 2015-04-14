@@ -15,6 +15,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casper.Domain.Specification
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casper.Core.Specifications", "tests\Casper.Core.Specifications\Casper.Core.Specifications.csproj", "{095F9B69-8CA2-41C2-AE6F-B1012ED89C5D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{9A41292B-D12F-4C86-8AA5-4F8128D806AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casper.Data.Git", "source\Casper.Data.Git\Casper.Data.Git.csproj", "{4FC07C45-E163-4152-B135-7C2C3A364874}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Casper.Data.Git.Specifications", "tests\Casper.Data.Git.Specifications\Casper.Data.Git.Specifications.csproj", "{B514ABC1-E834-42E3-9FC5-8620EA881709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +43,14 @@ Global
 		{095F9B69-8CA2-41C2-AE6F-B1012ED89C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{095F9B69-8CA2-41C2-AE6F-B1012ED89C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{095F9B69-8CA2-41C2-AE6F-B1012ED89C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC07C45-E163-4152-B135-7C2C3A364874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC07C45-E163-4152-B135-7C2C3A364874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC07C45-E163-4152-B135-7C2C3A364874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC07C45-E163-4152-B135-7C2C3A364874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B514ABC1-E834-42E3-9FC5-8620EA881709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B514ABC1-E834-42E3-9FC5-8620EA881709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B514ABC1-E834-42E3-9FC5-8620EA881709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B514ABC1-E834-42E3-9FC5-8620EA881709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,5 +60,7 @@ Global
 		{30C2B8B0-F92C-4E1B-88DD-65DC4081498C} = {C3E21496-BA14-46A2-9341-9CC6B7AB3CD1}
 		{548321D4-4F63-4DB2-AA25-AB9DCC595EEB} = {C3E21496-BA14-46A2-9341-9CC6B7AB3CD1}
 		{095F9B69-8CA2-41C2-AE6F-B1012ED89C5D} = {2D10C02F-822E-4174-8E3E-67A5C1BC78AF}
+		{4FC07C45-E163-4152-B135-7C2C3A364874} = {9A41292B-D12F-4C86-8AA5-4F8128D806AB}
+		{B514ABC1-E834-42E3-9FC5-8620EA881709} = {9A41292B-D12F-4C86-8AA5-4F8128D806AB}
 	EndGlobalSection
 EndGlobal

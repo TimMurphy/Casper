@@ -52,6 +52,21 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Packages\LibLog.3.1\LibLog.cs" />
+    <Compile Include="Features\Authors\Author.cs" />
+    <Compile Include="Features\Authors\IAuthor.cs" />
+    <Compile Include="Features\BlogPosts\BlogPostCommandHandler.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Infrastructure\ISlugFactory.cs" />
+    <Compile Include="Features\BlogPosts\Events\PublishedBlogPost.cs" />
+    <Compile Include="Features\BlogPosts\IBlogPostRepository.cs" />
+    <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
+    <Compile Include="Features\BlogPosts\Commands\PublishBlogPost.cs" />
+    <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />
+    <Compile Include="Infrastructure\Messaging\DuplicateCommandHandlerException.cs" />
+    <Compile Include="Infrastructure\Messaging\EventBus.cs" />
+    <Compile Include="Infrastructure\Messaging\ICommandBus.cs" />
+    <Compile Include="Infrastructure\Messaging\IEventBus.cs" />
+    <Compile Include="Infrastructure\SlugFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
