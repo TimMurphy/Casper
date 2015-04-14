@@ -1,0 +1,1 @@
+.$PSScriptRoot\Build.ps1
