@@ -1,4 +1,7 @@
-﻿using BoDi;
+﻿using System;
+using System.IO;
+using Anotar.LibLog;
+using BoDi;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
 using Casper.Domain.Features.BlogPosts;
@@ -14,6 +17,7 @@ namespace Casper.Domain.Specifications.Steps
     public class SetupSteps
     {
         private readonly IObjectContainer _objectContainer;
+        private DirectoryInfo _publishedDirectory;
 
         public SetupSteps(IObjectContainer objectContainer)
         {
@@ -23,10 +27,12 @@ namespace Casper.Domain.Specifications.Steps
         [BeforeScenario]
         public void BeforeScenario()
         {
+            _publishedDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
+
             var eventBus = new EventBus();
             var commandBus = new CommandBus(eventBus);
             var gitRepository = Dummy.GitRepository();
-            var blogPostRepository = new BlogPostRepository(gitRepository);
+            var blogPostRepository = new BlogPostRepository(gitRepository, _publishedDirectory, Dummy.MarkdownParser());
 
             Configuration.Configure(commandBus, blogPostRepository);
 
@@ -43,7 +49,20 @@ namespace Casper.Domain.Specifications.Steps
         [AfterScenario]
         public void AfterScenario()
         {
-            _objectContainer.Resolve<IGitRepository>().WorkingDirectory.ForceDelete();
+            TryDeleteDirectory(_publishedDirectory);
+            TryDeleteDirectory(_objectContainer.Resolve<IGitRepository>().WorkingDirectory);
+        }
+
+        private void TryDeleteDirectory(DirectoryInfo directory)
+        {
+            try
+            {
+                directory.ForceDelete();
+            }
+            catch (Exception exception)
+            {
+                LogTo.WarnException(string.Format("Could not delete '{0}' directory.", directory.FullName), exception);
+            }
         }
     }
 }

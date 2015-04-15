@@ -3,6 +3,7 @@ using System.IO;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Infrastructure;
+using FakeItEasy;
 using LibGit2Sharp;
 
 namespace Casper.Data.Git.Specifications.Helpers.Dummies
@@ -38,6 +39,11 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
         public static Signature Signature()
         {
             return new Signature("dummy name", "dummy@example.com", DateTimeOffset.Now);
+        }
+
+        public static IMarkdownParser MarkdownParser()
+        {
+            return A.Dummy<IMarkdownParser>();
         }
     }
 }
