@@ -30,8 +30,13 @@ namespace Casper.Data.Git.Git
             {
                 repo.Checkout(branch.Name());
                 repo.Stage(relativePath);
-                repo.Commit(comment, author.ToSignature());
+                repo.Commit(comment, author.ToSignature(), Committer());
             }
+        }
+
+        private Signature Committer()
+        {
+            return new Signature(_options.UserName, _options.Password, DateTime.UtcNow);
         }
 
         public Task PushAsync(GitBranches branch)
