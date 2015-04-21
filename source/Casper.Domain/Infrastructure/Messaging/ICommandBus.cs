@@ -7,7 +7,7 @@ namespace Casper.Domain.Infrastructure.Messaging
     // todo: specifications
     public interface ICommandBus
     {
-        void RegisterCommandHandler<TCommand>(Func<TCommand, Task<IEnumerable<object>>> commandHandler) where TCommand : class;
-        Task SendCommandAsync(object command);
+        void RegisterCommandHandler<TCommand>(Func<TCommand, Task<IEnumerable<IEvent>>> commandHandler) where TCommand : class, ICommand;
+        Task SendCommandAsync(ICommand command);
     }
 }

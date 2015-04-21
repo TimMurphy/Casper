@@ -1,10 +1,11 @@
 ﻿using System;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts.Commands;
+using Casper.Domain.Infrastructure.Messaging;
 
 namespace Casper.Domain.Features.BlogPosts.Events
 {
-    public class PublishedBlogPost
+    public class PublishedBlogPost : IEvent
     {
         public PublishedBlogPost(PublishBlogPost command)
             : this(command.Title, command.Title, command.Published, command.Author)

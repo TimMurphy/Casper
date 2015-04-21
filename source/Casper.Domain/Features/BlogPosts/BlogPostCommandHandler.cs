@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Features.BlogPosts.Events;
+using Casper.Domain.Infrastructure.Messaging;
 
 namespace Casper.Domain.Features.BlogPosts
 {
@@ -14,7 +15,7 @@ namespace Casper.Domain.Features.BlogPosts
             _blogPostRepository = blogPostRepository;
         }
 
-        public async Task<IEnumerable<object>> HandleAsync(PublishBlogPost command)
+        public async Task<IEnumerable<IEvent>> HandleAsync(PublishBlogPost command)
         {
             var blogPost = new BlogPost(command);
 

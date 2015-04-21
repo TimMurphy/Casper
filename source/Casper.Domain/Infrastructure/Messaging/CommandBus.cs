@@ -7,16 +7,16 @@ namespace Casper.Domain.Infrastructure.Messaging
 {
     public class CommandBus : ICommandBus
     {
-        private readonly ConcurrentDictionary<Type, Func<object, Task<IEnumerable<object>>>> _commandHandlers = new ConcurrentDictionary<Type, Func<object, Task<IEnumerable<object>>>>();
+        private readonly ConcurrentDictionary<Type, Func<ICommand, Task<IEnumerable<IEvent>>>> _commandHandlers = new ConcurrentDictionary<Type, Func<ICommand, Task<IEnumerable<IEvent>>>>();
         private readonly IEventBus _eventBus;
 
         public CommandBus(IEventBus eventBus)
         {
             _eventBus = eventBus;
         }
-        public void RegisterCommandHandler<TCommand>(Func<TCommand, Task<IEnumerable<object>>> commandHandler) where TCommand : class
+        public void RegisterCommandHandler<TCommand>(Func<TCommand, Task<IEnumerable<IEvent>>> commandHandler) where TCommand : class, ICommand
         {
-            Func<object, Task<IEnumerable<object>>> action = command => commandHandler((TCommand)command);
+            Func<ICommand, Task<IEnumerable<IEvent>>> action = command => commandHandler((TCommand)command);
 
             if (_commandHandlers.TryAdd(typeof(TCommand), action))
             {
@@ -25,7 +25,7 @@ namespace Casper.Domain.Infrastructure.Messaging
             throw new DuplicateCommandHandlerException(typeof(TCommand));
         }
 
-        public async Task SendCommandAsync(object command)
+        public async Task SendCommandAsync(ICommand command)
         {
             var commandHandler = GetCommandHandler(command);
             var events = await commandHandler(command);
@@ -33,9 +33,9 @@ namespace Casper.Domain.Infrastructure.Messaging
             await _eventBus.PublishEvents(events);
         }
 
-        private Func<object, Task<IEnumerable<object>>> GetCommandHandler(object command)
+        private Func<ICommand, Task<IEnumerable<IEvent>>> GetCommandHandler(object command)
         {
-            Func<object, Task<IEnumerable<object>>> commandHandler;
+            Func<ICommand, Task<IEnumerable<IEvent>>> commandHandler;
 
             if (_commandHandlers.TryGetValue(command.GetType(), out commandHandler))
             {

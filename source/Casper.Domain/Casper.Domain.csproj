@@ -65,6 +65,8 @@
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />
     <Compile Include="Infrastructure\Messaging\DuplicateCommandHandlerException.cs" />
     <Compile Include="Infrastructure\Messaging\EventBus.cs" />
+    <Compile Include="Infrastructure\Messaging\IEvent.cs" />
+    <Compile Include="Infrastructure\Messaging\ICommand.cs" />
     <Compile Include="Infrastructure\Messaging\ICommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\IEventBus.cs" />
     <Compile Include="Infrastructure\SlugFactory.cs" />

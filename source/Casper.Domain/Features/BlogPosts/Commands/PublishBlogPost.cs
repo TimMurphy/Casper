@@ -1,9 +1,10 @@
 ﻿using System;
 using Casper.Domain.Features.Authors;
+using Casper.Domain.Infrastructure.Messaging;
 
 namespace Casper.Domain.Features.BlogPosts.Commands
 {
-    public class PublishBlogPost
+    public class PublishBlogPost : ICommand
     {
         public PublishBlogPost(string title, string content, DateTimeOffset published, Author author)
         {
