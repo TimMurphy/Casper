@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Casper.Data.Git.Git;
 using Casper.Domain.Features.Authors;
@@ -32,6 +33,8 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
             _blogPostRepository = blogPostRepository;
             _invocationRecorder = invocationRecorder;
 
+            _given.Published = DateTime.Now;
+
             eventBus.SubscribeTo<PublishedBlogPost>(HandleCreatedBlogPostEvent);
         }
 
@@ -48,7 +51,6 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
             _given.Title = givenTitle == "valid" ? "dummy title" : givenTitle;
         }
 
-
         [Given(@"content is valid")]
         public void GivenContentIsValid()
         {
@@ -64,7 +66,7 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
         [When(@"I send the PublishBlogPost command")]
         public void WhenISendThePublishBlogPostCommand()
         {
-            _given.Command = new PublishBlogPost(_given.Title, _given.Content, DateTime.Now, _given.Author);
+            _given.Command = new PublishBlogPost(_given.GetBlogRelativeUri(), _given.Title, _given.Content, _given.Published, _given.Author);
             _commandBus.SendCommandAsync(_given.Command).Wait();
         }
 

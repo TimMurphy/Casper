@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Casper.Core;
 using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts;
@@ -19,7 +20,11 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
 
         public static PublishBlogPost PublishBlogPostCommand()
         {
-            return new PublishBlogPost("dummy title", "dummy content", DateTime.Now, Author());
+            var published = DateTime.Now;
+            var dateFolder = published.ToUniversalTime().ToFolders();
+            var uri = string.Format("{0}/{1}/{2}", "blog", dateFolder, "dummy-title");
+
+            return new PublishBlogPost(uri, "dummy title", "dummy content", published, Author());
         }
 
         public static Author Author()

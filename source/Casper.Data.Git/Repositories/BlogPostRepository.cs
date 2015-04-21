@@ -13,17 +13,13 @@ namespace Casper.Data.Git.Repositories
         private readonly IGitRepository _gitRepository;
         private readonly DirectoryInfo _publishedDirectory;
         private readonly IMarkdownParser _markdownParser;
-        private readonly string _blogDirectory;
-        private readonly ISlugFactory _slugFactory;
         private readonly IYamlMarkdown _yamlMarkdown;
 
-        public BlogPostRepository(IBlogPostRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, ISlugFactory slugFactory, IYamlMarkdown yamlMarkdown)
+        public BlogPostRepository(IBlogPostRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
         {
             _gitRepository = gitRepository;
             _publishedDirectory = new DirectoryInfo(settings.PublishedDirectory);
             _markdownParser = markdownParser;
-            _blogDirectory = settings.BlogDirectoryName;
-            _slugFactory = slugFactory;
             _yamlMarkdown = yamlMarkdown;
         }
 
@@ -68,11 +64,9 @@ namespace Casper.Data.Git.Repositories
             }
         }
 
-        private string GetRelativePath(BlogPost blogPost)
+        private static string GetRelativePath(BlogPost blogPost)
         {
-            var utc = blogPost.Published.ToUniversalTime();
-
-            return string.Format("{0}/{1:D4}/{2:D2}/{3:D2}/{4}.md", _blogDirectory, utc.Year, utc.Month, utc.Day, _slugFactory.CreateSlug(blogPost.Title));
+            return blogPost.RelativeUri + ".md";
         }
 
         private static void UndoWriteFile(BlogPost blogPost)

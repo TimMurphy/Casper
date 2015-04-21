@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="App_Packages\LibLog.3.1\LibLog.cs" />
     <Compile Include="Clock.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="IClock.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

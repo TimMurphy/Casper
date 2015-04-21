@@ -3,6 +3,5 @@
     public interface IBlogPostRepositorySettings
     {
         string PublishedDirectory { get; }
-        string BlogDirectoryName { get; }
     }
 }

@@ -1,15 +1,20 @@
 ﻿using System;
+using Casper.Core;
 using Casper.Data.Git.Git;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
+using Casper.Domain.Infrastructure;
 
 namespace Casper.Data.Git.Specifications.Helpers
 {
     public class GivenData
     {
-        public GivenData(object command)
+        private readonly ISlugFactory _slugFactory;
+
+        public GivenData(ISlugFactory slugFactory)
         {
+            _slugFactory = slugFactory;
             Git = new GitData();
         }
 
@@ -21,6 +26,13 @@ namespace Casper.Data.Git.Specifications.Helpers
         public GitData Git { get; set; }
         public Author Author { get; set; }
         public BlogPost BlogPost { get; set; }
+
+        public string GetBlogUri()
+        {
+            var uri = string.Format("{0}/{1}/{2}", "blog", Published.ToUniversalTime().DateTime.ToFolders(), _slugFactory.CreateSlug(Title));
+
+            return uri;
+        }
 
         public class GitData
         {

@@ -78,7 +78,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         [When(@"I call PublishAsync\(PublishBlogPost command\)")]
         public void WhenICallPublishAsyncPublishBlogPostCommand()
         {
-            _given.BlogPost = new BlogPost(_given.Title, _given.Content, _given.Published, _given.Author);
+            _given.BlogPost = new BlogPost(_given.GetBlogUri(), _given.Title, _given.Content, _given.Published, _given.Author);
             _blogPostRepository.PublishAsync(_given.BlogPost).Wait();
         }
 
@@ -112,8 +112,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             method.Should().NotBeNull();
 
             const GitBranches expectedBranch = GitBranches.Master;
-            var utc = _given.Published.ToUniversalTime();
-            var expectedRelativePath = string.Format("blog/{0:D4}/{1:D2}/{2:D2}/{3}.md", utc.Year, utc.Month, utc.Day, _slugFactory.CreateSlug(_given.Title));
+            var expectedRelativePath = string.Format("blog/{0}/{1}.md", _given.Published.ToUniversalTime().DateTime.ToFolders(), _slugFactory.CreateSlug(_given.Title));
             var expectedMessage = string.Format("Published blog post '{0}'.", _given.BlogPost.Title);
             var expectedAuthor = _given.Author;
 
