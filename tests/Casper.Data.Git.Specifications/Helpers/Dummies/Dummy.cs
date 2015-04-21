@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.Authors;
+using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Infrastructure;
 using FakeItEasy;
@@ -12,17 +14,12 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
     {
         public static PublishBlogPost PublishBlogPostCommand()
         {
-            return new PublishBlogPost("dummy title", "dummy content", DateTime.Now, Author(), "blog", new SlugFactory());
+            return new PublishBlogPost("dummy title", "dummy content", DateTime.Now, Author());
         }
 
-        public static IAuthor Author()
+        public static Author Author()
         {
-            return Author(DateTime.Now);
-        }
-
-        public static IAuthor Author(DateTime dateTime)
-        {
-            return new Author("dummy name", "dummy@example.com", new StaticClock(dateTime));
+            return new Author("dummy name", "dummy@example.com", TimeZone.CurrentTimeZone);
         }
 
         public static string TextFile(DirectoryInfo directory)
@@ -44,6 +41,21 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
         public static IMarkdownParser MarkdownParser()
         {
             return A.Dummy<IMarkdownParser>();
+        }
+
+        public static ISlugFactory SlugFactory()
+        {
+            return new SlugFactory();
+        }
+
+        public static IYamlMarkdown YamlMarkdown()
+        {
+            return new YamlMarkdown();
+        }
+
+        public BlogPost BlogPost()
+        {
+            return new BlogPost(PublishBlogPostCommand());
         }
     }
 }

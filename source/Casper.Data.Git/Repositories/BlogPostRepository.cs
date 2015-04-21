@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.BlogPosts;
-using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Infrastructure;
 
 namespace Casper.Data.Git.Repositories
@@ -14,77 +13,81 @@ namespace Casper.Data.Git.Repositories
         private readonly IGitRepository _gitRepository;
         private readonly DirectoryInfo _publishedDirectory;
         private readonly IMarkdownParser _markdownParser;
+        private readonly string _blogDirectory;
+        private readonly ISlugFactory _slugFactory;
+        private readonly IYamlMarkdown _yamlMarkdown;
 
-        public BlogPostRepository(IGitRepository gitRepository, DirectoryInfo publishedDirectory, IMarkdownParser markdownParser)
+        public BlogPostRepository(IBlogPostRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, ISlugFactory slugFactory, IYamlMarkdown yamlMarkdown)
         {
             _gitRepository = gitRepository;
-            _publishedDirectory = publishedDirectory;
+            _publishedDirectory = new DirectoryInfo(settings.PublishedDirectory);
             _markdownParser = markdownParser;
+            _blogDirectory = settings.BlogDirectoryName;
+            _slugFactory = slugFactory;
+            _yamlMarkdown = yamlMarkdown;
         }
 
-        public Task<bool> IsPublishedAsync(string path)
+        public async Task PublishAsync(BlogPost blogPost)
         {
-            var fullPath = Path.Combine(_gitRepository.WorkingDirectory.FullName, path);
-
-            return Task.FromResult(File.Exists(fullPath));
-        }
-
-        public async Task PublishAsync(PublishBlogPost command)
-        {
-            await WriteFileAsync(command);
-            await CommitFileAsync(command);
-            await PublishFileAsync(command);
+            await WriteFileAsync(blogPost);
+            await CommitFileAsync(blogPost);
+            await PublishFileAsync(blogPost);
             await _gitRepository.PushAsync(GitBranches.Master);
         }
 
-        private async Task PublishFileAsync(PublishBlogPost command)
+        private async Task PublishFileAsync(BlogPost blogPost)
         {
             try
             {
                 // todo: use true async method.
-                await Task.Run(() => PublishFile(command));
+                await Task.Run(() => PublishFile(blogPost));
             }
             catch (Exception)
             {
-                UndoCommit(command);
-                UndoWriteFile(command);
+                UndoCommit(blogPost);
+                UndoWriteFile(blogPost);
                 throw;
             }
         }
 
-        private static void UndoCommit(PublishBlogPost command)
+        private static void UndoCommit(BlogPost blogPost)
         {
-            throw new NotImplementedException("UndoCommit(PublishBlogPost command)");
+            throw new NotImplementedException("UndoCommit(BlogPost blogPost)");
         }
 
-        private async Task CommitFileAsync(PublishBlogPost command)
+        private async Task CommitFileAsync(BlogPost blogPost)
         {
             try
             {
-                await _gitRepository.CommitAsync(GitBranches.Master, command.Path, string.Format("Published blog post '{0}'.", command.Title), PublishBlogPost.Author);
+                await _gitRepository.CommitAsync(GitBranches.Master, GetRelativePath(blogPost), string.Format("Published blog post '{0}'.", blogPost.Title), blogPost.Author);
             }
             catch (Exception)
             {
-                UndoWriteFile(command);
+                UndoWriteFile(blogPost);
                 throw;
             }
         }
 
-        private static void UndoWriteFile(PublishBlogPost command)
+        private string GetRelativePath(BlogPost blogPost)
         {
-            throw new NotImplementedException("todo: UndoWriteFile(PublishBlogPost command)");
+            return string.Format("{0}/{1:D2}/{2:D2}/{3:D2}/{4}.md", _blogDirectory, blogPost.Published.Year, blogPost.Published.Month, blogPost.Published.Day, _slugFactory.CreateSlug(blogPost.Title));
         }
 
-        private Task WriteFileAsync(PublishBlogPost command)
+        private static void UndoWriteFile(BlogPost blogPost)
+        {
+            throw new NotImplementedException("todo: UndoWriteFile(BlogPost blogPost)");
+        }
+
+        private Task WriteFileAsync(BlogPost blogPost)
         {
             // todo: use true async method.
-            return Task.Run(() => WriteFile(command));
+            return Task.Run(() => WriteFile(blogPost));
         }
 
-        private void WriteFile(PublishBlogPost command)
+        private void WriteFile(BlogPost blogPost)
         {
-            var path = new FileInfo(Path.Combine(_gitRepository.WorkingDirectory.FullName, command.Path));
-            var contents = command.GetFileContents();
+            var path = new FileInfo(Path.Combine(_gitRepository.WorkingDirectory.FullName, GetRelativePath(blogPost)));
+            var contents = GetFileContents(blogPost);
 
             if (path.Directory == null)
             {
@@ -95,10 +98,15 @@ namespace Casper.Data.Git.Repositories
             File.WriteAllText(path.FullName, contents);
         }
 
-        private void PublishFile(PublishBlogPost command)
+        private string GetFileContents(BlogPost blogPost)
         {
-            var path = new FileInfo(Path.Combine(_publishedDirectory.FullName, command.Path)).ChangeFileExtension(".cshtml");
-            var contents = command.GetFileContents();
+            return blogPost.Serialize(_yamlMarkdown);
+        }
+
+        private void PublishFile(BlogPost blogPost)
+        {
+            var path = new FileInfo(Path.Combine(_publishedDirectory.FullName, GetRelativePath(blogPost))).ChangeFileExtension(".cshtml");
+            var contents = GetFileContents(blogPost);
             var html = _markdownParser.ToHtml(contents);
 
             if (path.Directory == null)

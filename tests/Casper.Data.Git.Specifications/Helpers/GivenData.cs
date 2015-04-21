@@ -1,6 +1,7 @@
 ﻿using System;
 using Casper.Data.Git.Git;
 using Casper.Domain.Features.Authors;
+using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
 
 namespace Casper.Data.Git.Specifications.Helpers
@@ -18,14 +19,15 @@ namespace Casper.Data.Git.Specifications.Helpers
         public string Content { get; set; }
         public DateTimeOffset Published { get; set; }
         public GitData Git { get; set; }
-        public IAuthor Author { get; set; }
+        public Author Author { get; set; }
+        public BlogPost BlogPost { get; set; }
 
         public class GitData
         {
             public GitBranches Branch { get; set; }
             public string RelativePath { get; set; }
             public string Comment { get; set; }
-            public IAuthor Author { get; set; }
+            public Author Author { get; set; }
         }
     }
 

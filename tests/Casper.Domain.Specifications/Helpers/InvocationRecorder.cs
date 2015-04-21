@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Castle.DynamicProxy;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+using Expression = System.Linq.Expressions.Expression;
 
-namespace Casper.Data.Git.Specifications.Helpers
+namespace Casper.Domain.Specifications.Helpers
 {
     public class InvocationRecorder : IInterceptor
     {
@@ -18,7 +19,7 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         public IEnumerable<IInvocation> CallsTo<T>()
         {
-            return _invocations.Where(i => i.TargetType == typeof(T));
+            return _invocations.Where(i => i.Method.DeclaringType == typeof(T));
         }
 
         public IEnumerable<IInvocation> CallsTo<T>(Expression<Action<T>> method)

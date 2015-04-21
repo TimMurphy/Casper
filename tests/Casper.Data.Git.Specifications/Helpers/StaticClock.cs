@@ -10,11 +10,11 @@ namespace Casper.Data.Git.Specifications.Helpers
         {
         }
 
-        public StaticClock(DateTime now)
+        public StaticClock(DateTime utcNow)
         {
-            Now = now;
+            UtcNow = utcNow;
         }
 
-        public DateTimeOffset Now { get; private set; }
+        public DateTime UtcNow { get; private set; }
     }
 }

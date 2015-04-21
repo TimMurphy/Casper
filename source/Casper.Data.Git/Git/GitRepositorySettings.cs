@@ -3,9 +3,9 @@ using OpenMagic;
 
 namespace Casper.Data.Git.Git
 {
-    public class GitRepositoryOptions : IGitRepositoryOptions
+    public class GitRepositorySettings : IGitRepositorySettings
     {
-        public GitRepositoryOptions(DirectoryInfo workingDirectory, string userName, string password)
+        public GitRepositorySettings(DirectoryInfo workingDirectory, string userName, string password)
         {
             Argument.DirectoryMustExist(workingDirectory, "workingDirectory");
 

@@ -1,18 +1,18 @@
-using Casper.Core;
+using System;
 
 namespace Casper.Domain.Features.Authors
 {
-    public class Author : IAuthor
+    public class Author
     {
-        public Author(string name, string email, IClock clock)
+        public Author(string name, string email, TimeZone timeZone)
         {
             Name = name;
             Email = email;
-            Clock = clock;
+            TimeZone = timeZone;
         }
 
         public string Name { get; private set; }
         public string Email { get; private set; }
-        public IClock Clock { get; private set; }
+        public TimeZone TimeZone { get; private set; }
     }
 }

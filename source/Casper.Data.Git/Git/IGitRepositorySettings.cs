@@ -2,7 +2,7 @@
 
 namespace Casper.Data.Git.Git
 {
-    public interface IGitRepositoryOptions
+    public interface IGitRepositorySettings
     {
         DirectoryInfo WorkingDirectory { get; }
         string UserName { get; }

@@ -53,7 +53,7 @@
     </Compile>
     <Compile Include="App_Packages\LibLog.3.1\LibLog.cs" />
     <Compile Include="Features\Authors\Author.cs" />
-    <Compile Include="Features\Authors\IAuthor.cs" />
+    <Compile Include="Features\BlogPosts\BlogPost.cs" />
     <Compile Include="Features\BlogPosts\BlogPostCommandHandler.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Infrastructure\IMarkdownParser.cs" />

@@ -2,11 +2,6 @@
 	As a developer
 	I want to publish blog posts to a website
 
-Scenario: IsPublishedAsync when blog post has been published
-	Given I have published a blog post
-	When I call IsPublishedAsync(path)
-	Then the result should be true
-
 Scenario Outline: PublishAsync 
 	Given Title is <title>
 		And Content is <content>
@@ -19,6 +14,6 @@ Scenario Outline: PublishAsync
 		And the master branch should be pushed to the remote server
 
 	Examples: 
-	| title        | content                   | published  | author                   | fileName                       | fileContents                                              |
-	| Women's Open | Will be held in Melbourne | 2015-02-05 | Tim, tim@example.com     | blog/2015/02/05/womens-open.md | # Women's Open{newline}{newline}Will be held in Melbourne |
-	| Men's Open   | Will be held in Sydney    | 2015-12-05 | Susan, susan@example.com | blog/2015/12/05/mens-open.md   | # Men's Open{newline}{newline}Will be held in Sydney      |
+	| title        | content                   | published  | author                    | fileName                       | fileContents                                                                                                                                                                                                                                                     |
+	| Women's Open | Will be held in Melbourne | 2015-02-05 | Tim <tim@example.com>     | blog/2015/02/05/womens-open.md | ---{newline}Title: Women's Open{newline}Published: 2015-02-05T00:00:00.0000000+11:00{newline}Author:{newline}  Name: Tim{newline}  Email: tim@example.com{newline}  TimeZoneId: AUS Eastern Standard Time{newline}{newline}---{newline}Will be held in Melbourne |
+	| Men's Open   | Will be held in Sydney    | 2015-06-30 | Susan <susan@example.com> | blog/2015/06/30/mens-open.md   | ---{newline}Title: Men's Open{newline}Published: 2015-06-30T00:00:00.0000000+10:00{newline}Author:{newline}  Name: Susan{newline}  Email: susan@example.com{newline}  TimeZoneId: AUS Eastern Standard Time{newline}{newline}---{newline}Will be held in Sydney  |

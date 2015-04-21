@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts.Commands;
 
-namespace Casper.Domain.Features.BlogPosts.Events
+namespace Casper.Domain.Features.BlogPosts
 {
-    public class PublishedBlogPost
+    public class BlogPost
     {
-        public PublishedBlogPost(PublishBlogPost command)
-            : this(command.Title, command.Title, command.Published, command.Author)
+        public BlogPost(PublishBlogPost command)
+            : this(command.Title, command.Content, command.Published, command.Author)
         {
         }
 
-        private PublishedBlogPost(string title, string content, DateTimeOffset published, Author author)
+        public BlogPost(string title, string content, DateTimeOffset published, Author author)
         {
             Title = title;
             Content = content;

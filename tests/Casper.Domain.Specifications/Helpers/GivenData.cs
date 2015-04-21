@@ -7,6 +7,6 @@ namespace Casper.Domain.Specifications.Helpers
         public object Command;
         public string Title;
         public string Content;
-        public IAuthor Author { get; set; }
+        public Author Author { get; set; }
     }
 }

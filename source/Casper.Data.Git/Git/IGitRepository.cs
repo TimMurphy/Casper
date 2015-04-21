@@ -8,7 +8,7 @@ namespace Casper.Data.Git.Git
     {
         DirectoryInfo WorkingDirectory { get; }
 
-        Task CommitAsync(GitBranches branch, string relativePath, string comment, IAuthor author);
+        Task CommitAsync(GitBranches branch, string relativePath, string comment, Author author);
         Task PushAsync(GitBranches branch);
     }
 }

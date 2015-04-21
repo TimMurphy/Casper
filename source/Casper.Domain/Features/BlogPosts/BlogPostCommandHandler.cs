@@ -16,9 +16,11 @@ namespace Casper.Domain.Features.BlogPosts
 
         public async Task<IEnumerable<object>> HandleAsync(PublishBlogPost command)
         {
-            await _blogPostRepository.PublishAsync(command);
+            var blogPost = new BlogPost(command);
 
-            return new[] { new PublishedBlogPost() };
+            await _blogPostRepository.PublishAsync(blogPost);
+
+            return new[] { new PublishedBlogPost(command) };
         }
     }
 }

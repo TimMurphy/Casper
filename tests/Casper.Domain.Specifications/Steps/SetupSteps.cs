@@ -7,7 +7,9 @@ using Casper.Data.Git.Repositories;
 using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Infrastructure;
 using Casper.Domain.Infrastructure.Messaging;
+using Casper.Domain.Specifications.Helpers;
 using Casper.Domain.Specifications.Helpers.Dummies;
+using Castle.DynamicProxy;
 using OpenMagic.Extensions;
 using TechTalk.SpecFlow;
 
@@ -29,10 +31,16 @@ namespace Casper.Domain.Specifications.Steps
         {
             _publishedDirectory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
 
+            var invocationRecorder = new InvocationRecorder();
+            var generator = new ProxyGenerator();
+
+
             var eventBus = new EventBus();
             var commandBus = new CommandBus(eventBus);
             var gitRepository = Dummy.GitRepository();
-            var blogPostRepository = new BlogPostRepository(gitRepository, _publishedDirectory, Dummy.MarkdownParser());
+            var slugFactory = Dummy.SlugFactory();
+            var yamlMatter = Dummy.YamlMatter();
+            var blogPostRepository = generator.CreateInterfaceProxyWithTarget<IBlogPostRepository>(new BlogPostRepository(new BlogPostRepositorySettings(_publishedDirectory.FullName, "blog"), gitRepository, Dummy.MarkdownParser(), slugFactory, yamlMatter), invocationRecorder);
 
             Configuration.Configure(commandBus, blogPostRepository);
 
@@ -41,28 +49,15 @@ namespace Casper.Domain.Specifications.Steps
             _objectContainer.RegisterInstanceAs(eventBus, typeof(IEventBus));
             _objectContainer.RegisterInstanceAs(gitRepository, typeof(IGitRepository));
             _objectContainer.RegisterInstanceAs(blogPostRepository, typeof(IBlogPostRepository));
-
-            // Register Types
-            _objectContainer.RegisterTypeAs<SlugFactory, ISlugFactory>();
+            _objectContainer.RegisterInstanceAs(slugFactory, typeof(ISlugFactory));
+            _objectContainer.RegisterInstanceAs(invocationRecorder, typeof(InvocationRecorder));
         }
 
         [AfterScenario]
         public void AfterScenario()
         {
-            TryDeleteDirectory(_publishedDirectory);
-            TryDeleteDirectory(_objectContainer.Resolve<IGitRepository>().WorkingDirectory);
-        }
-
-        private void TryDeleteDirectory(DirectoryInfo directory)
-        {
-            try
-            {
-                directory.ForceDelete();
-            }
-            catch (Exception exception)
-            {
-                LogTo.WarnException(string.Format("Could not delete '{0}' directory.", directory.FullName), exception);
-            }
+            _publishedDirectory.ForceDeleteIfExists();
+            _objectContainer.Resolve<IGitRepository>().WorkingDirectory.ForceDeleteIfExists();
         }
     }
 }

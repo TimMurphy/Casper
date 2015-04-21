@@ -4,6 +4,9 @@ namespace Casper.Core
 {
     public interface IClock
     {
-        DateTimeOffset Now { get; }
+        /// <summary>
+        ///     Gets the current UTC date & time.
+        /// </summary>
+        DateTime UtcNow { get; }
     }
 }

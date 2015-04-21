@@ -8,6 +8,7 @@ using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Features.BlogPosts;
+using Casper.Domain.Specifications.Helpers;
 using Castle.DynamicProxy;
 using LibGit2Sharp;
 using OpenMagic.Extensions;
@@ -21,8 +22,8 @@ namespace Casper.Data.Git.Specifications.Helpers
         private readonly Lazy<IBlogPostRepository> _blogPostRepository;
         private readonly Lazy<IGitRepository> _gitRepository;
         public readonly List<Action> CleanUpActions = new List<Action>();
-        public DirectoryInfo GitRemoteDirectory;
         public DirectoryInfo GitCloneDirectory;
+        public DirectoryInfo GitRemoteDirectory;
 
         public ScenarioHelpers(IObjectContainer objectContainer)
         {
@@ -50,7 +51,7 @@ namespace Casper.Data.Git.Specifications.Helpers
         {
             var directory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
 
-            CleanUpActions.Add(() => { directory.ForceDelete(); });
+            CleanUpActions.Add(() => { directory.ForceDeleteIfExists(); });
 
             return directory;
         }
@@ -69,7 +70,7 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         private IBlogPostRepository BlogPostRepositoryFactory()
         {
-            return new BlogPostRepository(GitRepository, CreateSelfDeletingDirectory(), Dummy.MarkdownParser());
+            return new BlogPostRepository(new BlogPostRepositorySettings(CreateSelfDeletingDirectory().FullName, "blog"), GitRepository, Dummy.MarkdownParser(), Dummy.SlugFactory(), Dummy.YamlMarkdown());
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter
@@ -78,7 +79,7 @@ namespace Casper.Data.Git.Specifications.Helpers
             var workingDirectory = InitGitRepository();
 
             var generator = new ProxyGenerator();
-            var gitRepository = generator.CreateInterfaceProxyWithTarget<IGitRepository>(new GitRepository(new GitRepositoryOptions(workingDirectory, "dummy", "dummy@example.com")), invocationRecorder);
+            var gitRepository = generator.CreateInterfaceProxyWithTarget<IGitRepository>(new GitRepository(new GitRepositorySettings(workingDirectory, "dummy", "dummy@example.com")), invocationRecorder);
 
             return gitRepository;
         }

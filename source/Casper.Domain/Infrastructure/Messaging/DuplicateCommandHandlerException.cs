@@ -4,7 +4,7 @@ namespace Casper.Domain.Infrastructure.Messaging
 {
     public class DuplicateCommandHandlerException : Exception
     {
-        public DuplicateCommandHandlerException(Type type)
+        internal DuplicateCommandHandlerException(Type type)
             : base(string.Format("A command handler for '{0}' command has previously been registered.", type))
         {
         }
