@@ -4,9 +4,19 @@ namespace Casper.Core
 {
     public static class TimeZoneInfoExtensions
     {
-        public static DateTimeOffset ToLocalTime(this TimeZoneInfo timeZoneInfo, IClock clock)
+        public static DateTimeOffset ConvertTimeFromUtc(this TimeZoneInfo timeZoneInfo, IClock clock)
         {
-            return TimeZoneInfo.ConvertTime(clock.UtcNow, timeZoneInfo);
+            return timeZoneInfo.ConvertTimeFromUtc(clock.UtcNow);
+        }
+
+        public static DateTimeOffset ConvertTimeFromUtc(this TimeZoneInfo timeZoneInfo, DateTime utcNow)
+        {
+            var offset = timeZoneInfo.GetUtcOffset(utcNow);
+            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, timeZoneInfo);
+
+            var dateTimeOffset = new DateTimeOffset(dateTime, offset);
+
+            return dateTimeOffset;
         }
     }
 }

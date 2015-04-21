@@ -70,7 +70,9 @@ namespace Casper.Data.Git.Repositories
 
         private string GetRelativePath(BlogPost blogPost)
         {
-            return string.Format("{0}/{1:D2}/{2:D2}/{3:D2}/{4}.md", _blogDirectory, blogPost.Published.Year, blogPost.Published.Month, blogPost.Published.Day, _slugFactory.CreateSlug(blogPost.Title));
+            var utc = blogPost.Published.ToUniversalTime();
+
+            return string.Format("{0}/{1:D4}/{2:D2}/{3:D2}/{4}.md", _blogDirectory, utc.Year, utc.Month, utc.Day, _slugFactory.CreateSlug(blogPost.Title));
         }
 
         private static void UndoWriteFile(BlogPost blogPost)

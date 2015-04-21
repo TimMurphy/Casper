@@ -14,7 +14,7 @@ namespace Casper.Data.Git.Git
 
         private static Signature ToGitSignature(Author author, IClock clock)
         {
-            var when = author.TimeZoneInfo.ToLocalTime(clock);
+            var when = author.TimeZoneInfo.ConvertTimeFromUtc(clock);
 
             return new Signature(author.Name, author.Email, when);
         }

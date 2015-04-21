@@ -70,7 +70,7 @@ namespace Casper.Data.Git.Specifications.Features.Git.Steps
 
                 commit.Author.Name.Should().Be(_given.Git.Author.Name);
                 commit.Author.Email.Should().Be(_given.Git.Author.Email);
-                commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ToLocalTime(_clock));
+                commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ConvertTimeFromUtc(_clock));
                 commit.Message.Should().Be(_given.Git.Comment + '\n');
 
                 repository.Head.Name.Should().Be(_given.Git.Branch.ToString().ToLower());
@@ -102,7 +102,7 @@ namespace Casper.Data.Git.Specifications.Features.Git.Steps
 
                 commit.Author.Name.Should().Be(_given.Git.Author.Name);
                 commit.Author.Email.Should().Be(_given.Git.Author.Email);
-                commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ToLocalTime(_clock));
+                commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ConvertTimeFromUtc(_clock));
                 commit.Message.Should().Be(_given.Git.Comment + '\n');
 
                 repository.Head.Name.Should().Be(_given.Git.Branch.ToString().ToLower());

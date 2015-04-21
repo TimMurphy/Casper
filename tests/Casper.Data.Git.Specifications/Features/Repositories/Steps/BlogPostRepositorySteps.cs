@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Casper.Core;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Specifications.Helpers;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
@@ -34,6 +35,12 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             _slugFactory = slugFactory;
         }
 
+        [Given(@"TimeZoneId is (.*)")]
+        public void GivenTimeZoneIdIs(string timeZoneId)
+        {
+            Dummy.SetTimeZoneId(timeZoneId);
+        }
+        
         [Given(@"I have published a blog post")]
         public void GivenIHavePublishedABlogPost()
         {
@@ -59,13 +66,13 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             var name = author.TextBeforeLast("<").Trim();
             var email = author.TextAfterLast("<").TextBeforeLast(">").Trim();
 
-            _given.Author = new Author(name, email, Dummy.TimeZoneInfo());
+            _given.Author = new Author(name, email, Dummy.TimeZoneInfo);
         }
 
         [Given(@"Published is (.*)")]
         public void GivenPublishedIs(string published)
         {
-            _given.Published = DateTime.Parse(published);
+            _given.Published = Dummy.TimeZoneInfo.ConvertTimeFromUtc(DateTime.Parse(published).ToUniversalTime());
         }
 
         [When(@"I call PublishAsync\(PublishBlogPost command\)")]
@@ -105,7 +112,8 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             method.Should().NotBeNull();
 
             const GitBranches expectedBranch = GitBranches.Master;
-            var expectedRelativePath = string.Format("blog/{0:D2}/{1:D2}/{2:D2}/{3}.md", _given.Published.Year, _given.Published.Month, _given.Published.Day, _slugFactory.CreateSlug(_given.Title));
+            var utc = _given.Published.ToUniversalTime();
+            var expectedRelativePath = string.Format("blog/{0:D4}/{1:D2}/{2:D2}/{3}.md", utc.Year, utc.Month, utc.Day, _slugFactory.CreateSlug(_given.Title));
             var expectedMessage = string.Format("Published blog post '{0}'.", _given.BlogPost.Title);
             var expectedAuthor = _given.Author;
 

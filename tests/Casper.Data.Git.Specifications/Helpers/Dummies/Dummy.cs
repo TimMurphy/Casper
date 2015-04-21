@@ -12,6 +12,11 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
 {
     public class Dummy
     {
+        static Dummy()
+        {
+            SetTimeZoneId("Russian Standard Time");
+        }
+
         public static PublishBlogPost PublishBlogPostCommand()
         {
             return new PublishBlogPost("dummy title", "dummy content", DateTime.Now, Author());
@@ -19,7 +24,7 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
 
         public static Author Author()
         {
-            return new Author("dummy name", "dummy@example.com", TimeZoneInfo());
+            return new Author("dummy name", "dummy@example.com", TimeZoneInfo);
         }
 
         public static string TextFile(DirectoryInfo directory)
@@ -58,9 +63,16 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
             return new BlogPost(PublishBlogPostCommand());
         }
 
-        public static TimeZoneInfo TimeZoneInfo()
+        public static TimeZoneInfo TimeZoneInfo { get; private set; }
+
+        public static void SetTimeZoneId(string timeZoneId)
         {
-            return System.TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+            TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+
+            if (TimeZoneInfo.Id == TimeZoneInfo.Local.Id)
+            {
+                throw new Exception("Tests cannot continue because dummy TimeZoneInfo is same as local TimeZoneInfo.");
+            }
         }
     }
 }
