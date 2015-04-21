@@ -8,7 +8,7 @@ namespace Casper.Data.Git.Infrastructure.Metadata
         {
             Name = author.Name;
             Email = author.Email;
-            TimeZoneId = author.TimeZone.GetTimeZoneId();
+            TimeZoneId = author.TimeZoneInfo.Id;
         }
 
         public string Name { get; set; }

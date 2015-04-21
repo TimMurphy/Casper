@@ -37,8 +37,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         [Given(@"I have published a blog post")]
         public void GivenIHavePublishedABlogPost()
         {
-            _given.BlogPost = new Dummy().BlogPost();
-
+            _given.BlogPost = Dummy.BlogPost();
             _blogPostRepository.PublishAsync(_given.BlogPost).Wait();
         }
 
@@ -60,7 +59,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             var name = author.TextBeforeLast("<").Trim();
             var email = author.TextAfterLast("<").TextBeforeLast(">").Trim();
 
-            _given.Author = new Author(name, email, TimeZone.CurrentTimeZone);
+            _given.Author = new Author(name, email, Dummy.TimeZoneInfo());
         }
 
         [Given(@"Published is (.*)")]
@@ -121,7 +120,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
 
             actualAuthor.Email.Should().Be(expectedAuthor.Email);
             actualAuthor.Name.Should().Be(expectedAuthor.Name);
-            actualAuthor.TimeZone.Should().Be(expectedAuthor.TimeZone);
+            actualAuthor.TimeZoneInfo.Should().Be(expectedAuthor.TimeZoneInfo);
         }
 
         [Then(@"the master branch should be pushed to the remote server")]

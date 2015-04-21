@@ -19,7 +19,7 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
 
         public static Author Author()
         {
-            return new Author("dummy name", "dummy@example.com", TimeZone.CurrentTimeZone);
+            return new Author("dummy name", "dummy@example.com", TimeZoneInfo());
         }
 
         public static string TextFile(DirectoryInfo directory)
@@ -53,9 +53,14 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
             return new YamlMarkdown();
         }
 
-        public BlogPost BlogPost()
+        public static BlogPost BlogPost()
         {
             return new BlogPost(PublishBlogPostCommand());
+        }
+
+        public static TimeZoneInfo TimeZoneInfo()
+        {
+            return System.TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
         }
     }
 }

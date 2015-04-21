@@ -36,5 +36,10 @@ namespace Casper.Domain.Specifications.Helpers.Dummies
         {
             return A.Dummy<IYamlMarkdown>();
         }
+
+        public static TimeZoneInfo TimeZoneInfo()
+        {
+            return System.TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+        }
     }
 }

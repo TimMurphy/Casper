@@ -8,6 +8,7 @@ using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Features.BlogPosts.Events;
 using Casper.Domain.Infrastructure.Messaging;
 using Casper.Domain.Specifications.Helpers;
+using Casper.Domain.Specifications.Helpers.Dummies;
 using Castle.DynamicProxy;
 using FluentAssertions;
 using TechTalk.SpecFlow;
@@ -57,7 +58,7 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
         [Given(@"author is valid")]
         public void GivenAuthorIsValid()
         {
-            _given.Author = new Author("dummy name", "dummy@example.com", TimeZone.CurrentTimeZone);
+            _given.Author = new Author("dummy name", "dummy@example.com", Dummy.TimeZoneInfo());
         }
 
         [When(@"I send the PublishBlogPost command")]
