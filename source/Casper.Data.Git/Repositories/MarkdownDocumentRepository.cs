@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Infrastructure;
-using Casper.Domain.Infrastructure;
 using Casper.Domain.Infrastructure.MarkdownDocuments;
 
 namespace Casper.Data.Git.Repositories
@@ -12,14 +11,12 @@ namespace Casper.Data.Git.Repositories
     {
         private readonly IGitRepository _gitRepository;
         private readonly DirectoryInfo _publishedDirectory;
-        private readonly IMarkdownParser _markdownParser;
         private readonly IYamlMarkdown _yamlMarkdown;
 
-        protected MarkdownDocumentRepository(IMarkdownDocumentRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
+        protected MarkdownDocumentRepository(IMarkdownDocumentRepositorySettings settings, IGitRepository gitRepository, IYamlMarkdown yamlMarkdown)
         {
             _gitRepository = gitRepository;
             _publishedDirectory = new DirectoryInfo(settings.PublishedDirectory);
-            _markdownParser = markdownParser;
             _yamlMarkdown = yamlMarkdown;
         }
 
@@ -66,7 +63,7 @@ namespace Casper.Data.Git.Repositories
 
         private static string GetRelativePath(TDocument markdownDocument)
         {
-            return markdownDocument.RelativeUri + ".md";
+            return (markdownDocument.RelativeUri + ".md").Replace("/", "\\");
         }
 
         private static void UndoWriteFile(TDocument markdownDocument)
@@ -94,24 +91,24 @@ namespace Casper.Data.Git.Repositories
             File.WriteAllText(path.FullName, contents);
         }
 
-        private string GetFileContents(TDocument markdownDocument)
-        {
-            return markdownDocument.Serialize(_yamlMarkdown);
-        }
-
         private void PublishFile(TDocument markdownDocument)
         {
-            var path = new FileInfo(Path.Combine(_publishedDirectory.FullName, GetRelativePath(markdownDocument))).ChangeFileExtension(".cshtml");
-            var contents = GetFileContents(markdownDocument);
-            var html = _markdownParser.ToHtml(contents);
+            var relativePath = GetRelativePath(markdownDocument);
+            var gitFile = Path.Combine(_gitRepository.WorkingDirectory.FullName, relativePath);
+            var publishedFile = new FileInfo(Path.Combine(_publishedDirectory.FullName, relativePath));
 
-            if (path.Directory == null)
+            if (publishedFile.Directory == null)
             {
                 throw new Exception("Expected directory would not be null.");
             }
 
-            Directory.CreateDirectory(path.Directory.FullName);
-            File.WriteAllText(path.FullName, html);
+            Directory.CreateDirectory(publishedFile.Directory.FullName);
+            File.Copy(gitFile, publishedFile.FullName, true);
+        }
+
+        private string GetFileContents(TDocument markdownDocument)
+        {
+            return markdownDocument.Serialize(_yamlMarkdown);
         }
     }
 }

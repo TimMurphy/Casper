@@ -64,7 +64,6 @@
     <Compile Include="Features\Pages\Events\PublishedPage.cs" />
     <Compile Include="Features\Pages\IPageRepository.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="Infrastructure\IMarkdownParser.cs" />
     <Compile Include="Infrastructure\ISlugFactory.cs" />
     <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />

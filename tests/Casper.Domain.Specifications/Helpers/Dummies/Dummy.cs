@@ -22,11 +22,6 @@ namespace Casper.Domain.Specifications.Helpers.Dummies
             return value;
         }
 
-        public static IMarkdownParser MarkdownParser()
-        {
-            return A.Dummy<IMarkdownParser>();
-        }
-
         public static ISlugFactory SlugFactory()
         {
             return new SlugFactory();

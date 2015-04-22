@@ -72,7 +72,7 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         private IBlogPostRepository BlogPostRepositoryFactory()
         {
-            return new BlogPostRepository(new BlogPostRepositorySettings(CreateSelfDeletingDirectory().FullName), GitRepository, Dummy.MarkdownParser(), Dummy.YamlMarkdown());
+            return new BlogPostRepository(new BlogPostRepositorySettings(CreateSelfDeletingDirectory().FullName), GitRepository, Dummy.YamlMarkdown());
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

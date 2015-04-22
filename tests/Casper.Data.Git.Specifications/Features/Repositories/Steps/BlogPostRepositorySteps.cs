@@ -114,7 +114,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             method.Should().NotBeNull();
 
             const GitBranches expectedBranch = GitBranches.Master;
-            var expectedRelativePath = string.Format("blog/{0}/{1}.md", _given.Published.ToUniversalTime().DateTime.ToFolders(), _slugFactory.CreateSlug(_given.Title));
+            var expectedRelativePath = string.Format("blog/{0}/{1}.md", _given.Published.ToUniversalTime().DateTime.ToFolders(), _slugFactory.CreateSlug(_given.Title)).ToDosSlashes();
             var expectedMessage = string.Format("Published blog post '{0}'.", _given.BlogPost.Title);
             var expectedAuthor = _given.Author;
 

@@ -48,11 +48,6 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
             return new Signature("dummy name", "dummy@example.com", DateTimeOffset.Now);
         }
 
-        public static IMarkdownParser MarkdownParser()
-        {
-            return A.Dummy<IMarkdownParser>();
-        }
-
         public static ISlugFactory SlugFactory()
         {
             return new SlugFactory();
