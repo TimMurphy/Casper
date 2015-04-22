@@ -6,7 +6,6 @@ using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Infrastructure;
-using FakeItEasy;
 using LibGit2Sharp;
 
 namespace Casper.Data.Git.Specifications.Helpers.Dummies

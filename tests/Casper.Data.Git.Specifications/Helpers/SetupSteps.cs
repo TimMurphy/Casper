@@ -1,5 +1,4 @@
-﻿using System;
-using BoDi;
+﻿using BoDi;
 using Casper.Core;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Infrastructure;

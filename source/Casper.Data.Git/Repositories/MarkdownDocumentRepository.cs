@@ -45,7 +45,7 @@ namespace Casper.Data.Git.Repositories
 
         private static void UndoCommit(TDocument markdownDocument)
         {
-            throw new NotImplementedException("UndoCommit(TDocument markdownDocument)");
+            throw new NotImplementedException(string.Format("UndoCommit(markdownDocument: {0})", markdownDocument.RelativeUri));
         }
 
         private async Task CommitFileAsync(TDocument markdownDocument)
@@ -68,7 +68,7 @@ namespace Casper.Data.Git.Repositories
 
         private static void UndoWriteFile(TDocument markdownDocument)
         {
-            throw new NotImplementedException("todo: UndoWriteFile(TDocument markdownDocument)");
+            throw new NotImplementedException(string.Format("todo: UndoWriteFile(markdownDocument: {0})", markdownDocument.RelativeUri));
         }
 
         private Task WriteFileAsync(TDocument markdownDocument)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Casper.Data.Git.Git;
 using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
@@ -11,7 +9,6 @@ using Casper.Domain.Infrastructure.MarkdownDocuments;
 using Casper.Domain.Infrastructure.Messaging;
 using Casper.Domain.Specifications.Helpers;
 using Casper.Domain.Specifications.Helpers.Dummies;
-using Castle.DynamicProxy;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
@@ -22,16 +19,14 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
     {
         private readonly ActualData _actual;
         private readonly ICommandBus _commandBus;
-        private readonly IBlogPostRepository _blogPostRepository;
         private readonly GivenData _given;
         private readonly InvocationRecorder _invocationRecorder;
 
-        public PublishBlogPostSteps(GivenData given, ActualData actual, ICommandBus commandBus, IEventBus eventBus, IBlogPostRepository blogPostRepository, InvocationRecorder invocationRecorder)
+        public PublishBlogPostSteps(GivenData given, ActualData actual, ICommandBus commandBus, IEventBus eventBus, InvocationRecorder invocationRecorder)
         {
             _given = given;
             _actual = actual;
             _commandBus = commandBus;
-            _blogPostRepository = blogPostRepository;
             _invocationRecorder = invocationRecorder;
 
             _given.Published = DateTime.Now;

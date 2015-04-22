@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Anotar.LibLog;
 using BoDi;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;

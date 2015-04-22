@@ -18,14 +18,13 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
     [Binding]
     public class BlogPostRepositorySteps
     {
-        private const string BlogDirectoryName = "blog";
         private readonly ActualData _actual;
         private readonly IBlogPostRepository _blogPostRepository;
         private readonly GivenData _given;
         private readonly InvocationRecorder _invocationRecorder;
         private readonly ISlugFactory _slugFactory;
         private string _expectedBlogPostFullPath;
-        private DirectoryInfo _blogPostRepositoryWorkingDirectory;
+        private readonly DirectoryInfo _blogPostRepositoryWorkingDirectory;
 
         public BlogPostRepositorySteps(GivenData given, ActualData actual, ScenarioHelpers scenarioHelpers, InvocationRecorder invocationRecorder, ISlugFactory slugFactory)
         {

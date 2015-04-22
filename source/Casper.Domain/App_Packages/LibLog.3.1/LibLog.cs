@@ -28,6 +28,7 @@
 
 // Define LIBLOG_PORTABLE conditional compilation symbol for PCL compatibility
 
+// ReSharper disable All
 #pragma warning disable 1591
 
 namespace Casper.Domain.Logging
