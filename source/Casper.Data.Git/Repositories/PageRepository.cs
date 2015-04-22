@@ -7,7 +7,8 @@ namespace Casper.Data.Git.Repositories
 {
     public class PageRepository : MarkdownDocumentRepository<Page>, IPageRepository
     {
-        public PageRepository(IMarkdownDocumentRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public PageRepository(IPageRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
             : base(settings, gitRepository, markdownParser, yamlMarkdown)
         {
         }

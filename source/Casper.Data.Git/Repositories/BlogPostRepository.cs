@@ -7,7 +7,8 @@ namespace Casper.Data.Git.Repositories
 {
     public class BlogPostRepository : MarkdownDocumentRepository<BlogPost>, IBlogPostRepository
     {
-        public BlogPostRepository(IMarkdownDocumentRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public BlogPostRepository(IBlogPostRepositorySettings settings, IGitRepository gitRepository, IMarkdownParser markdownParser, IYamlMarkdown yamlMarkdown)
             : base(settings, gitRepository, markdownParser, yamlMarkdown)
         {
         }
