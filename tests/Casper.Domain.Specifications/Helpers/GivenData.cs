@@ -20,6 +20,7 @@ namespace Casper.Domain.Specifications.Helpers
         public string Content;
         public Author Author { get; set; }
         public DateTime Published { get; set; }
+        public string MarkdownWithFrontMatter { get; set; }
 
         public string GetBlogRelativeUri()
         {

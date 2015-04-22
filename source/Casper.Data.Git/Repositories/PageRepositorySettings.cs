@@ -1,8 +1,10 @@
-﻿namespace Casper.Data.Git.Repositories
+﻿using System.IO;
+
+namespace Casper.Data.Git.Repositories
 {
     public class PageRepositorySettings : MarkdownDocumentRepositorySettings, IPageRepositorySettings
     {
-        public PageRepositorySettings(string publishedDirectory)
+        public PageRepositorySettings(DirectoryInfo publishedDirectory)
             : base(publishedDirectory)
         {
         }

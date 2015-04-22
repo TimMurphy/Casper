@@ -2,8 +2,13 @@
 
 namespace Casper.Data.Git.Infrastructure.Metadata
 {
-    internal class AuthorMetdata
+    public class AuthorMetdata
     {
+        public AuthorMetdata()
+        {
+            // YamlDotNet requires empty constructor
+        }
+
         public AuthorMetdata(Author author)
         {
             Name = author.Name;

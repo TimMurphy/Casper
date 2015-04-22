@@ -2,9 +2,14 @@
 
 namespace Casper.Data.Git.Infrastructure.Metadata
 {
-    internal class MarkdownMetadata
+    public class MarkdownMetadata
     {
-        internal MarkdownMetadata(MarkdownDocument markdownDocument)
+        public MarkdownMetadata()
+        {
+            // YamlDotNet requires empty constructor
+        }
+
+        public MarkdownMetadata(MarkdownDocument markdownDocument)
         {
             Title = markdownDocument.Title;
             Published = markdownDocument.Published.ToString("o");

@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using Casper.Core;
+using Casper.Data.Git.Infrastructure;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Infrastructure;
 using Casper.Domain.Specifications.Helpers;
@@ -21,9 +22,11 @@ namespace Casper.Data.Git.Specifications.Helpers
         [BeforeScenario]
         public void BeforeScenario()
         {
+            _objectContainer.RegisterInstance<IClock>(new DummyClock());
+
             _objectContainer.RegisterTypeAs<InvocationRecorder, InvocationRecorder>();
             _objectContainer.RegisterTypeAs<SlugFactory, ISlugFactory>();
-            _objectContainer.RegisterInstanceAs(new DummyClock(), typeof(IClock));
+            _objectContainer.RegisterTypeAs<YamlMarkdown, IYamlMarkdown>();
 
             ServiceLocator.SetLocatorProvider(() => new SpecFlowServiceLocator(_objectContainer));
         }

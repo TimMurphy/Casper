@@ -13,10 +13,10 @@ using FluentAssertions;
 using OpenMagic.Extensions;
 using TechTalk.SpecFlow;
 
-namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
+namespace Casper.Data.Git.Specifications.Features.Repositories.BlogPostRepository.Steps
 {
     [Binding]
-    public class BlogPostRepositorySteps
+    public class PublishAsyncSteps
     {
         private readonly ActualData _actual;
         private readonly IBlogPostRepository _blogPostRepository;
@@ -26,7 +26,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         private string _expectedBlogPostFullPath;
         private readonly DirectoryInfo _blogPostRepositoryWorkingDirectory;
 
-        public BlogPostRepositorySteps(GivenData given, ActualData actual, ScenarioHelpers scenarioHelpers, InvocationRecorder invocationRecorder, ISlugFactory slugFactory)
+        public PublishAsyncSteps(GivenData given, ActualData actual, ScenarioHelpers scenarioHelpers, InvocationRecorder invocationRecorder, ISlugFactory slugFactory)
         {
             _given = given;
             _actual = actual;

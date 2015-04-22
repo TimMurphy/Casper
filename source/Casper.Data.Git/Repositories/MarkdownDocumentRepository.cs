@@ -9,15 +9,15 @@ namespace Casper.Data.Git.Repositories
 {
     public abstract class MarkdownDocumentRepository<TDocument> : IMarkdownDocumentRepository<TDocument> where TDocument : MarkdownDocument
     {
-        private readonly IGitRepository _gitRepository;
-        private readonly DirectoryInfo _publishedDirectory;
-        private readonly IYamlMarkdown _yamlMarkdown;
+        protected readonly IGitRepository GitRepository;
+        protected readonly DirectoryInfo PublishedDirectory;
+        protected readonly IYamlMarkdown YamlMarkdown;
 
         protected MarkdownDocumentRepository(IMarkdownDocumentRepositorySettings settings, IGitRepository gitRepository, IYamlMarkdown yamlMarkdown)
         {
-            _gitRepository = gitRepository;
-            _publishedDirectory = new DirectoryInfo(settings.PublishedDirectory);
-            _yamlMarkdown = yamlMarkdown;
+            GitRepository = gitRepository;
+            PublishedDirectory = settings.PublishedDirectory;
+            YamlMarkdown = yamlMarkdown;
         }
 
         public async Task PublishAsync(TDocument markdownDocument)
@@ -25,7 +25,7 @@ namespace Casper.Data.Git.Repositories
             await WriteFileAsync(markdownDocument);
             await CommitFileAsync(markdownDocument);
             await PublishFileAsync(markdownDocument);
-            await _gitRepository.PushAsync(GitBranches.Master);
+            await GitRepository.PushAsync(GitBranches.Master);
         }
 
         private async Task PublishFileAsync(TDocument markdownDocument)
@@ -52,7 +52,7 @@ namespace Casper.Data.Git.Repositories
         {
             try
             {
-                await _gitRepository.CommitAsync(GitBranches.Master, GetRelativePath(markdownDocument), string.Format("Published blog post '{0}'.", markdownDocument.Title), markdownDocument.Author);
+                await GitRepository.CommitAsync(GitBranches.Master, GetRelativePath(markdownDocument), string.Format("Published blog post '{0}'.", markdownDocument.Title), markdownDocument.Author);
             }
             catch (Exception)
             {
@@ -79,7 +79,7 @@ namespace Casper.Data.Git.Repositories
 
         private void WriteFile(TDocument markdownDocument)
         {
-            var path = new FileInfo(Path.Combine(_gitRepository.WorkingDirectory.FullName, GetRelativePath(markdownDocument)));
+            var path = new FileInfo(Path.Combine(GitRepository.WorkingDirectory.FullName, GetRelativePath(markdownDocument)));
             var contents = GetFileContents(markdownDocument);
 
             if (path.Directory == null)
@@ -94,8 +94,8 @@ namespace Casper.Data.Git.Repositories
         private void PublishFile(TDocument markdownDocument)
         {
             var relativePath = GetRelativePath(markdownDocument);
-            var gitFile = Path.Combine(_gitRepository.WorkingDirectory.FullName, relativePath);
-            var publishedFile = new FileInfo(Path.Combine(_publishedDirectory.FullName, relativePath));
+            var gitFile = Path.Combine(GitRepository.WorkingDirectory.FullName, relativePath);
+            var publishedFile = new FileInfo(Path.Combine(PublishedDirectory.FullName, relativePath));
 
             if (publishedFile.Directory == null)
             {
@@ -108,7 +108,7 @@ namespace Casper.Data.Git.Repositories
 
         private string GetFileContents(TDocument markdownDocument)
         {
-            return markdownDocument.Serialize(_yamlMarkdown);
+            return markdownDocument.Serialize(YamlMarkdown);
         }
     }
 }

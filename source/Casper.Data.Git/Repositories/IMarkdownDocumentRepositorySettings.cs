@@ -1,7 +1,9 @@
-﻿namespace Casper.Data.Git.Repositories
+﻿using System.IO;
+
+namespace Casper.Data.Git.Repositories
 {
     public interface IMarkdownDocumentRepositorySettings
     {
-        string PublishedDirectory { get; }
+        DirectoryInfo PublishedDirectory { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿Feature: BlogPostRepository
+﻿Feature: BlogPostRepository.PublishAsync
 	As a developer
 	I want to publish blog posts to a website
 

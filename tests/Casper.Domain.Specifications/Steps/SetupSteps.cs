@@ -40,8 +40,8 @@ namespace Casper.Domain.Specifications.Steps
             var gitRepository = Dummy.GitRepository();
             var slugFactory = Dummy.SlugFactory();
             var yamlMatter = Dummy.YamlMatter();
-            var blogPostRepository = generator.CreateInterfaceProxyWithTarget<IBlogPostRepository>(new BlogPostRepository(new BlogPostRepositorySettings(_publishedDirectory.FullName), gitRepository, yamlMatter), invocationRecorder);
-            var pageRepository = generator.CreateInterfaceProxyWithTarget<IPageRepository>(new PageRepository(new PageRepositorySettings(_publishedDirectory.FullName), gitRepository, yamlMatter), invocationRecorder);
+            var blogPostRepository = generator.CreateInterfaceProxyWithTarget<IBlogPostRepository>(new BlogPostRepository(new BlogPostRepositorySettings(_publishedDirectory, "blog"), gitRepository, yamlMatter), invocationRecorder);
+            var pageRepository = generator.CreateInterfaceProxyWithTarget<IPageRepository>(new PageRepository(new PageRepositorySettings(_publishedDirectory), gitRepository, yamlMatter), invocationRecorder);
 
             Configuration.Configure(commandBus, blogPostRepository, pageRepository);
 

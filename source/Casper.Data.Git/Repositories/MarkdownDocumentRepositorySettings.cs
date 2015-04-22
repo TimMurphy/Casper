@@ -1,12 +1,14 @@
-﻿namespace Casper.Data.Git.Repositories
+﻿using System.IO;
+
+namespace Casper.Data.Git.Repositories
 {
     public abstract class MarkdownDocumentRepositorySettings : IMarkdownDocumentRepositorySettings
     {
-        protected MarkdownDocumentRepositorySettings(string publishedDirectory)
+        protected MarkdownDocumentRepositorySettings(DirectoryInfo publishedDirectory)
         {
             PublishedDirectory = publishedDirectory;
         }
 
-        public string PublishedDirectory { get; private set; }
+        public DirectoryInfo PublishedDirectory { get; private set; }
     }
 }

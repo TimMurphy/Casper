@@ -75,6 +75,7 @@
     <Compile Include="Git\GitRepositorySettings.cs" />
     <Compile Include="Git\GitAuthorExtensions.cs" />
     <Compile Include="Git\IGitRepositorySettings.cs" />
+    <Compile Include="Infrastructure\BlogPostSerialization.cs" />
     <Compile Include="Infrastructure\Metadata\AuthorMetdata.cs" />
     <Compile Include="Infrastructure\MarkdownDocumentExtensions.cs" />
     <Compile Include="Infrastructure\Metadata\MarkdownMetadata.cs" />

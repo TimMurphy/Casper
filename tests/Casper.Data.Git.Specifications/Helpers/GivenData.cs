@@ -11,6 +11,7 @@ namespace Casper.Data.Git.Specifications.Helpers
     public class GivenData
     {
         private readonly ISlugFactory _slugFactory;
+        public object Command;
 
         public GivenData(ISlugFactory slugFactory)
         {
@@ -18,14 +19,29 @@ namespace Casper.Data.Git.Specifications.Helpers
             Git = new GitData();
         }
 
-        public object Command;
-        public PublishBlogPost PublishBlogPostCommand { get { return (PublishBlogPost) Command; } }
+        public PublishBlogPost PublishBlogPostCommand
+        {
+            get { return (PublishBlogPost) Command; }
+        }
+
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTimeOffset Published { get; set; }
         public GitData Git { get; set; }
         public Author Author { get; set; }
         public BlogPost BlogPost { get; set; }
+        public DateTime PublishedFirstDate { get; set; }
+        public DateTime PublishedLastDate { get; set; }
+        public string TitleFormat { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+
+        public IPagination Pagination
+        {
+            get { return new Pagination(PageNumber, PageSize); }
+        }
+
+        public string MarkdownWithFrontMatter { get; set; }
 
         public string GetBlogUri()
         {
@@ -42,5 +58,4 @@ namespace Casper.Data.Git.Specifications.Helpers
             public Author Author { get; set; }
         }
     }
-
 }

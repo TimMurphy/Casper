@@ -44,6 +44,10 @@
       <HintPath>..\..\packages\NullGuard.Fody.1.4.1\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OpenMagic, Version=1.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenMagic.1.19.0\lib\net45\OpenMagic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -64,6 +68,7 @@
     <Compile Include="Features\Pages\Events\PublishedPage.cs" />
     <Compile Include="Features\Pages\IPageRepository.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Infrastructure\IPagination.cs" />
     <Compile Include="Infrastructure\ISlugFactory.cs" />
     <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />
@@ -78,7 +83,9 @@
     <Compile Include="Infrastructure\MarkdownDocuments\IMarkdownDocumentRepository.cs" />
     <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocument.cs" />
     <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocumentCommandHandler.cs" />
+    <Compile Include="Infrastructure\Pagination.cs" />
     <Compile Include="Infrastructure\SlugFactory.cs" />
+    <Compile Include="IPaginationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

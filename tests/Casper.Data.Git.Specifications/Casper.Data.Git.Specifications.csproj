@@ -97,18 +97,30 @@
     <Compile Include="..\Casper.Domain.Specifications\Helpers\InvocationRecorder.cs">
       <Link>Helpers\InvocationRecorder.cs</Link>
     </Compile>
+    <Compile Include="Features\Infrastructure\BlogPostSerialization.feature.cs">
+      <DependentUpon>BlogPostSerialization.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\Git\GitRepository.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GitRepository.feature</DependentUpon>
     </Compile>
-    <Compile Include="Features\Repositories\Steps\BlogPostRepositorySteps.cs" />
-    <Compile Include="Features\Repositories\BlogPostRepository.feature.cs">
+    <Compile Include="Features\Infrastructure\Steps\BlogPostSerializationSteps.cs" />
+    <Compile Include="Features\Repositories\BlogPostRepository\FindBlogPostsAsync.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BlogPostRepository.feature</DependentUpon>
+      <DependentUpon>FindBlogPostsAsync.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Repositories\BlogPostRepository\Steps\PublishAsyncSteps.cs" />
+    <Compile Include="Features\Repositories\BlogPostRepository\PublishAsync.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PublishAsync.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Git\Steps\GitRepositorySteps.cs" />
+    <Compile Include="Features\Repositories\BlogPostRepository\Steps\FindBlogPostsAsyncSteps.cs" />
     <Compile Include="Helpers\Dummies\DummyClock.cs" />
     <Compile Include="Helpers\Dummies\Dummy.cs" />
     <Compile Include="Helpers\ActualData.cs" />
@@ -122,13 +134,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Features\Infrastructure\BlogPostSerialization.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>BlogPostSerialization.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\Git\GitRepository.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GitRepository.feature.cs</LastGenOutput>
     </None>
-    <None Include="Features\Repositories\BlogPostRepository.feature">
+    <None Include="Features\Repositories\BlogPostRepository\FindBlogPostsAsync.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>BlogPostRepository.feature.cs</LastGenOutput>
+      <LastGenOutput>FindBlogPostsAsync.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Repositories\BlogPostRepository\PublishAsync.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PublishAsync.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -149,6 +169,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

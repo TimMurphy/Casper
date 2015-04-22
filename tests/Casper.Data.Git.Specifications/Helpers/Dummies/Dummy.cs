@@ -73,5 +73,20 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
                 throw new Exception("Tests cannot continue because dummy TimeZoneInfo is same as local TimeZoneInfo.");
             }
         }
+
+        public static string Content()
+        {
+            return "content - " + Guid.NewGuid();
+        }
+
+        public static string Title(string titleFormat, DateTime published)
+        {
+            return titleFormat.Replace("{day}", published.Day.ToString());
+        }
+
+        public static string RelativeUri(string blogDirectoryName, DateTime published, string title)
+        {
+            return string.Format("{0}/{1}/{2}", blogDirectoryName, published.ToFolders(), SlugFactory().CreateSlug(title));
+        }
     }
 }
