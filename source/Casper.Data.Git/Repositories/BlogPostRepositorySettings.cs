@@ -1,12 +1,10 @@
 ﻿namespace Casper.Data.Git.Repositories
 {
-    public class BlogPostRepositorySettings : IBlogPostRepositorySettings
+    public class BlogPostRepositorySettings : MarkdownDocumentRepositorySettings, IBlogPostRepositorySettings
     {
         public BlogPostRepositorySettings(string publishedDirectory)
+            : base(publishedDirectory)
         {
-            PublishedDirectory = publishedDirectory;
         }
-
-        public string PublishedDirectory { get; private set; }
     }
 }

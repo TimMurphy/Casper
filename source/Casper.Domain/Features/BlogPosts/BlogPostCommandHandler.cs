@@ -1,27 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Casper.Domain.Features.BlogPosts.Commands;
+﻿using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Features.BlogPosts.Events;
-using Casper.Domain.Infrastructure.Messaging;
+using Casper.Domain.Infrastructure.MarkdownDocuments;
 
 namespace Casper.Domain.Features.BlogPosts
 {
-    public class BlogPostCommandHandler
+    public class BlogPostCommandHandler : MarkdownDocumentCommandHandler<BlogPost, PublishBlogPost, PublishedBlogPost>
     {
-        private readonly IBlogPostRepository _blogPostRepository;
-
         public BlogPostCommandHandler(IBlogPostRepository blogPostRepository)
+            : base(blogPostRepository, publishBlogPost => new BlogPost(publishBlogPost) , publishBlogPost => new PublishedBlogPost(publishBlogPost)  )
         {
-            _blogPostRepository = blogPostRepository;
-        }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(PublishBlogPost command)
-        {
-            var blogPost = new BlogPost(command);
-
-            await _blogPostRepository.PublishAsync(blogPost);
-
-            return new[] { new PublishedBlogPost(command) };
         }
     }
 }

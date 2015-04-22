@@ -7,6 +7,7 @@ using Casper.Domain.Features.Authors;
 using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.BlogPosts.Commands;
 using Casper.Domain.Features.BlogPosts.Events;
+using Casper.Domain.Infrastructure.MarkdownDocuments;
 using Casper.Domain.Infrastructure.Messaging;
 using Casper.Domain.Specifications.Helpers;
 using Casper.Domain.Specifications.Helpers.Dummies;
@@ -73,7 +74,7 @@ namespace Casper.Domain.Specifications.Features.BlogPosts.Steps
         [Then(@"the blog post should be created")]
         public void ThenTheBlogPostShouldBeCreated()
         {
-            var publishAsync = _invocationRecorder.CallsTo<IBlogPostRepository>().Single(m => m.Method.Name == "PublishAsync");
+            var publishAsync = _invocationRecorder.CallsTo<IMarkdownDocumentRepository<BlogPost>>().Single(m => m.Method.Name == "PublishAsync");
             var expectedBlogPost = new BlogPost((PublishBlogPost) _given.Command);
             var actualBlogPost = (BlogPost) publishAsync.Arguments[0];
 

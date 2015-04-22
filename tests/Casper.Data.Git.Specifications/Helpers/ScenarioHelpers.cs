@@ -41,6 +41,8 @@ namespace Casper.Data.Git.Specifications.Helpers
             get { return _blogPostRepository.Value; }
         }
 
+        public DirectoryInfo BlogPostRepositoryWorkingDirectory { get; private set; }
+
         /// <summary>
         ///     Creates a temporary directory that will be deleted after scenario has completed.
         /// </summary>
@@ -80,6 +82,8 @@ namespace Casper.Data.Git.Specifications.Helpers
 
             var generator = new ProxyGenerator();
             var gitRepository = generator.CreateInterfaceProxyWithTarget<IGitRepository>(new GitRepository(new GitRepositorySettings(workingDirectory, "dummy", "dummy@example.com")), invocationRecorder);
+
+            BlogPostRepositoryWorkingDirectory = workingDirectory;
 
             return gitRepository;
         }

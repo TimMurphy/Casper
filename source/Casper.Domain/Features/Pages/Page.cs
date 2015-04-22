@@ -1,19 +1,19 @@
 using System;
 using Casper.Domain.Features.Authors;
-using Casper.Domain.Features.BlogPosts.Commands;
+using Casper.Domain.Features.Pages.Commands;
 using Casper.Domain.Infrastructure.MarkdownDocuments;
 
-namespace Casper.Domain.Features.BlogPosts
+namespace Casper.Domain.Features.Pages
 {
-    public class BlogPost : MarkdownDocument
+    public class Page : MarkdownDocument
     {
         // ReSharper disable once SuggestBaseTypeForParameter
-        public BlogPost(PublishBlogPost command)
+        public Page(PublishPage command)
             : base(command)
         {
         }
 
-        public BlogPost(string relativeUri, string title, string content, DateTimeOffset published, Author author)
+        public Page(string relativeUri, string title, string content, DateTimeOffset published, Author author)
             : base(relativeUri, title, content, published, author)
         {
         }

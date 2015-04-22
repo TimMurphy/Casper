@@ -25,12 +25,14 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         private readonly InvocationRecorder _invocationRecorder;
         private readonly ISlugFactory _slugFactory;
         private string _expectedBlogPostFullPath;
+        private DirectoryInfo _blogPostRepositoryWorkingDirectory;
 
         public BlogPostRepositorySteps(GivenData given, ActualData actual, ScenarioHelpers scenarioHelpers, InvocationRecorder invocationRecorder, ISlugFactory slugFactory)
         {
             _given = given;
             _actual = actual;
             _blogPostRepository = scenarioHelpers.BlogPostRepository;
+            _blogPostRepositoryWorkingDirectory = scenarioHelpers.BlogPostRepositoryWorkingDirectory;
             _invocationRecorder = invocationRecorder;
             _slugFactory = slugFactory;
         }
@@ -91,7 +93,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         [Then(@"the blog post should saved to (.*) file")]
         public void ThenTheBlogPostFileShouldBeCreated(string blogPostPath)
         {
-            _expectedBlogPostFullPath = Path.Combine(_blogPostRepository.GitDirectory().FullName, blogPostPath);
+            _expectedBlogPostFullPath = Path.Combine(_blogPostRepositoryWorkingDirectory.FullName, blogPostPath);
 
             File.Exists(_expectedBlogPostFullPath).Should().BeTrue();
         }

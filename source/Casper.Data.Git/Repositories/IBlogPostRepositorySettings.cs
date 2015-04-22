@@ -1,7 +1,6 @@
 ﻿namespace Casper.Data.Git.Repositories
 {
-    public interface IBlogPostRepositorySettings
+    public interface IBlogPostRepositorySettings : IMarkdownDocumentRepositorySettings
     {
-        string PublishedDirectory { get; }
     }
 }

@@ -76,16 +76,22 @@
     <Compile Include="Git\GitAuthorExtensions.cs" />
     <Compile Include="Git\IGitRepositorySettings.cs" />
     <Compile Include="Infrastructure\Metadata\AuthorMetdata.cs" />
-    <Compile Include="Infrastructure\BlogPostExtensions.cs" />
-    <Compile Include="Infrastructure\Metadata\BlogPostMetadata.cs" />
+    <Compile Include="Infrastructure\MarkdownDocumentExtensions.cs" />
+    <Compile Include="Infrastructure\Metadata\MarkdownMetadata.cs" />
     <Compile Include="Infrastructure\FileInfoExtensions.cs" />
     <Compile Include="Infrastructure\YamlMarkdown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PageRepository.cs" />
+    <Compile Include="Repositories\PageRepositorySettings.cs" />
+    <Compile Include="Repositories\IPageRepositorySettings.cs" />
+    <Compile Include="Repositories\MarkdownDocumentRepositorySettings.cs" />
+    <Compile Include="Repositories\MarkdownDocumentRepository.cs" />
     <Compile Include="Repositories\BlogPostRepository.cs" />
     <Compile Include="Git\GitBranches.cs" />
     <Compile Include="Git\IGitRepository.cs" />
     <Compile Include="Infrastructure\IYamlMarkdown.cs" />
     <Compile Include="Repositories\BlogPostRepositorySettings.cs" />
+    <Compile Include="Repositories\IMarkdownDocumentRepositorySettings.cs" />
     <Compile Include="Repositories\IBlogPostRepositorySettings.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,8 @@
-using System.Threading.Tasks;
+using Casper.Domain.Infrastructure.MarkdownDocuments;
 
 namespace Casper.Domain.Features.BlogPosts
 {
-    public interface IBlogPostRepository
+    public interface IBlogPostRepository : IMarkdownDocumentRepository<BlogPost>
     {
-        Task PublishAsync(BlogPost blogPost);
     }
 }

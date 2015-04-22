@@ -5,6 +5,7 @@ using BoDi;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
 using Casper.Domain.Features.BlogPosts;
+using Casper.Domain.Features.Pages;
 using Casper.Domain.Infrastructure;
 using Casper.Domain.Infrastructure.Messaging;
 using Casper.Domain.Specifications.Helpers;
@@ -41,14 +42,16 @@ namespace Casper.Domain.Specifications.Steps
             var slugFactory = Dummy.SlugFactory();
             var yamlMatter = Dummy.YamlMatter();
             var blogPostRepository = generator.CreateInterfaceProxyWithTarget<IBlogPostRepository>(new BlogPostRepository(new BlogPostRepositorySettings(_publishedDirectory.FullName), gitRepository, Dummy.MarkdownParser(), yamlMatter), invocationRecorder);
+            var pageRepository = generator.CreateInterfaceProxyWithTarget<IPageRepository>(new PageRepository(new PageRepositorySettings(_publishedDirectory.FullName), gitRepository, Dummy.MarkdownParser(), yamlMatter), invocationRecorder);
 
-            Configuration.Configure(commandBus, blogPostRepository);
+            Configuration.Configure(commandBus, blogPostRepository, pageRepository);
 
             // Register Instances
             _objectContainer.RegisterInstanceAs(commandBus, typeof(ICommandBus));
             _objectContainer.RegisterInstanceAs(eventBus, typeof(IEventBus));
             _objectContainer.RegisterInstanceAs(gitRepository, typeof(IGitRepository));
             _objectContainer.RegisterInstanceAs(blogPostRepository, typeof(IBlogPostRepository));
+            _objectContainer.RegisterInstanceAs(pageRepository, typeof(IPageRepository));
             _objectContainer.RegisterInstanceAs(slugFactory, typeof(ISlugFactory));
             _objectContainer.RegisterInstanceAs(invocationRecorder, typeof(InvocationRecorder));
         }

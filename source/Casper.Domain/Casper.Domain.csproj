@@ -53,15 +53,20 @@
     </Compile>
     <Compile Include="App_Packages\LibLog.3.1\LibLog.cs" />
     <Compile Include="Features\Authors\Author.cs" />
+    <Compile Include="Features\BlogPosts\Commands\PublishBlogPost.cs" />
+    <Compile Include="Features\BlogPosts\Events\PublishedBlogPost.cs" />
+    <Compile Include="Features\BlogPosts\IBlogPostRepository.cs" />
     <Compile Include="Features\BlogPosts\BlogPost.cs" />
     <Compile Include="Features\BlogPosts\BlogPostCommandHandler.cs" />
+    <Compile Include="Features\Pages\Page.cs" />
+    <Compile Include="Features\Pages\PageCommandHandler.cs" />
+    <Compile Include="Features\Pages\Commands\PublishPage.cs" />
+    <Compile Include="Features\Pages\Events\PublishedPage.cs" />
+    <Compile Include="Features\Pages\IPageRepository.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Infrastructure\IMarkdownParser.cs" />
     <Compile Include="Infrastructure\ISlugFactory.cs" />
-    <Compile Include="Features\BlogPosts\Events\PublishedBlogPost.cs" />
-    <Compile Include="Features\BlogPosts\IBlogPostRepository.cs" />
     <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
-    <Compile Include="Features\BlogPosts\Commands\PublishBlogPost.cs" />
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />
     <Compile Include="Infrastructure\Messaging\DuplicateCommandHandlerException.cs" />
     <Compile Include="Infrastructure\Messaging\EventBus.cs" />
@@ -69,6 +74,11 @@
     <Compile Include="Infrastructure\Messaging\ICommand.cs" />
     <Compile Include="Infrastructure\Messaging\ICommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\IEventBus.cs" />
+    <Compile Include="Infrastructure\MarkdownDocuments\Commands\PublishMarkdownDocument.cs" />
+    <Compile Include="Infrastructure\MarkdownDocuments\Events\PublishedMarkdownDocument.cs" />
+    <Compile Include="Infrastructure\MarkdownDocuments\IMarkdownDocumentRepository.cs" />
+    <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocument.cs" />
+    <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocumentCommandHandler.cs" />
     <Compile Include="Infrastructure\SlugFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +94,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
