@@ -2,6 +2,7 @@
 using Casper.Data.Git.Infrastructure;
 using Casper.Data.Git.Specifications.Helpers;
 using FluentAssertions;
+using OpenMagic.Extensions;
 using TechTalk.SpecFlow;
 
 namespace Casper.Data.Git.Specifications.Features.Infrastructure.Steps
@@ -71,7 +72,7 @@ namespace Casper.Data.Git.Specifications.Features.Infrastructure.Steps
         [Then(@"Content should be:")]
         public void ThenContentShouldBe(string expectedContent)
         {
-            _actual.BlogPost.Content.Should().Be(expectedContent);
+            _actual.BlogPost.Content.NormalizeLineEndings().Should().Be(expectedContent.NormalizeLineEndings());
         }
     }
 }
