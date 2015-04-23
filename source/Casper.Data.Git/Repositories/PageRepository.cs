@@ -48,7 +48,10 @@ namespace Casper.Data.Git.Repositories
         {
             var directory = Path.Combine(PublishedDirectory.FullName, relativeDirectory);
 
-            return System.IO.Directory.EnumerateFiles(directory, "*.md").Select(file => PageSerialization.DeserializeFromFile(file, PublishedDirectory, YamlMarkdown));
+            return from file in System.IO.Directory.EnumerateFiles(directory, "*.md")
+                   let page = PageSerialization.TryDeserializeFromFile(file, PublishedDirectory, YamlMarkdown)
+                   where page != null
+                   select page;
         }
     }
 }
