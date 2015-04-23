@@ -64,6 +64,7 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         public void ThenDirectoriesWithTheFollowingRelativeUrisShouldBeReturned(Table table)
         {
             _actual.Directories.Select(p => p.RelativeUri).ShouldAllBeEquivalentTo(table.Rows.Select(r => r[0]));
+            _actual.Directories.Select(p => p.Name).ShouldAllBeEquivalentTo(table.Rows.Select(r => r[1]));
         }
 
         [Then(@"no directories should be returned")]

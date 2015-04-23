@@ -1,4 +1,4 @@
-using System.IO;
+using OpenMagic.Extensions;
 
 namespace Casper.Domain.Features.Pages
 {
@@ -13,7 +13,7 @@ namespace Casper.Domain.Features.Pages
 
         public string Name
         {
-            get { return Path.GetDirectoryName(RelativeUri); }
+            get { return RelativeUri.TextAfterLast("/", RelativeUri); }
         }
     }
 }
