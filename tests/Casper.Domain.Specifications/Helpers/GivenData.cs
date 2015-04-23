@@ -21,6 +21,7 @@ namespace Casper.Domain.Specifications.Helpers
         public Author Author { get; set; }
         public DateTime Published { get; set; }
         public string MarkdownWithFrontMatter { get; set; }
+        public string RelativeUri { get; set; }
 
         public string GetBlogRelativeUri()
         {

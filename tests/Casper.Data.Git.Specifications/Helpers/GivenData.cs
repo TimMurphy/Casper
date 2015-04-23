@@ -12,6 +12,7 @@ namespace Casper.Data.Git.Specifications.Helpers
     {
         private readonly ISlugFactory _slugFactory;
         public object Command;
+        private string _directory;
 
         public GivenData(ISlugFactory slugFactory)
         {
@@ -42,6 +43,12 @@ namespace Casper.Data.Git.Specifications.Helpers
         }
 
         public string MarkdownWithFrontMatter { get; set; }
+
+        public string Directory
+        {
+            get { return _directory; }
+            set { _directory = value == "empty string" ? "" : value; }
+        }
 
         public string GetBlogUri()
         {

@@ -54,8 +54,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="OpenMagic, Version=1.19.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenMagic.1.19.0\lib\net45\OpenMagic.dll</HintPath>
+    <Reference Include="OpenMagic, Version=1.21.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenMagic.1.21.0\lib\net45\OpenMagic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -95,6 +95,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommandBus.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Infrastructure\MarkdownDocuments\MarkdownDocument.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarkdownDocument.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Infrastructure\SlugFactory.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,6 +115,7 @@
     </Compile>
     <Compile Include="Helpers\Dummies\Dummy.cs" />
     <Compile Include="Helpers\InvocationRecorder.cs" />
+    <Compile Include="Features\Infrastructure\MarkdownDocuments\Steps\MarkdownDocumentSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\GivenData.cs" />
     <Compile Include="Steps\SetupSteps.cs" />
@@ -148,6 +154,10 @@
     <None Include="Features\Infrastructure\Messaging\CommandBus.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>CommandBus.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Infrastructure\MarkdownDocuments\MarkdownDocument.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>MarkdownDocument.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Infrastructure\SlugFactory.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

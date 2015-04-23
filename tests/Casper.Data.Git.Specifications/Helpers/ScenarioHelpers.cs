@@ -8,6 +8,7 @@ using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Features.BlogPosts;
+using Casper.Domain.Features.Pages;
 using Casper.Domain.Specifications.Helpers;
 using Castle.DynamicProxy;
 using LibGit2Sharp;
@@ -20,15 +21,19 @@ namespace Casper.Data.Git.Specifications.Helpers
     public class ScenarioHelpers
     {
         private readonly Lazy<IBlogPostRepository> _blogPostRepository;
+        private readonly Lazy<IPageRepository> _pageRepository;
         private readonly Lazy<IGitRepository> _gitRepository;
         public readonly List<Action> CleanUpActions = new List<Action>();
         public DirectoryInfo GitCloneDirectory;
         public DirectoryInfo GitRemoteDirectory;
+        private readonly Lazy<DirectoryInfo> _repositoryDirectory;
 
         public ScenarioHelpers(IObjectContainer objectContainer)
         {
             _gitRepository = new Lazy<IGitRepository>(() => GitRepositoryFactory(objectContainer.Resolve<InvocationRecorder>()));
             _blogPostRepository = new Lazy<IBlogPostRepository>(BlogPostRepositoryFactory);
+            _pageRepository = new Lazy<IPageRepository>(PageRepositoryFactory);
+            _repositoryDirectory = new Lazy<DirectoryInfo>(CreateSelfDeletingDirectory);
         }
 
         public IGitRepository GitRepository
@@ -39,6 +44,11 @@ namespace Casper.Data.Git.Specifications.Helpers
         public IBlogPostRepository BlogPostRepository
         {
             get { return _blogPostRepository.Value; }
+        }
+
+        public IPageRepository PageRepository
+        {
+            get { return _pageRepository.Value; }
         }
 
         public DirectoryInfo BlogPostRepositoryWorkingDirectory { get; private set; }
@@ -53,7 +63,30 @@ namespace Casper.Data.Git.Specifications.Helpers
         {
             var directory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
 
-            CleanUpActions.Add(() => { directory.ForceDeleteIfExists(); });
+            CleanUpActions.Add(() =>
+            {
+                const int maximumAttempts = 3;
+
+                for (var attempt = 0; attempt < maximumAttempts; attempt++)
+                {
+                    try
+                    {
+                        directory.ForceDeleteIfExists();
+                        break;
+                    }
+                    catch (Exception exception)
+                    {
+                        if (attempt == maximumAttempts - 1)
+                        {
+                            LogTo.ErrorException(string.Format("Could not delete directory '{0}'. FINAL ATTEMPT.", directory.FullName), exception);
+                        }
+                        else
+                        {
+                            LogTo.WarnException(string.Format("Could not delete directory '{0}'. Attempt '{1}'.", directory.FullName, attempt + 1), exception);
+                        }
+                    }
+                }
+            });
 
             return directory;
         }
@@ -72,7 +105,12 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         private IBlogPostRepository BlogPostRepositoryFactory()
         {
-            return new BlogPostRepository(new BlogPostRepositorySettings(CreateSelfDeletingDirectory(), "blog"), GitRepository, Dummy.YamlMarkdown());
+            return new BlogPostRepository(new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
+        }
+
+        private IPageRepository PageRepositoryFactory()
+        {
+            return new PageRepository(new PageRepositorySettings(_repositoryDirectory.Value), new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"),  GitRepository, Dummy.YamlMarkdown());
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

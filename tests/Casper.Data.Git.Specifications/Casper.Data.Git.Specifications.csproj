@@ -66,8 +66,8 @@
       <HintPath>..\..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OpenMagic, Version=1.19.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenMagic.1.19.0\lib\net45\OpenMagic.dll</HintPath>
+    <Reference Include="OpenMagic, Version=1.21.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenMagic.1.21.0\lib\net45\OpenMagic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -121,6 +121,11 @@
     </Compile>
     <Compile Include="Features\Git\Steps\GitRepositorySteps.cs" />
     <Compile Include="Features\Repositories\BlogPostRepository\Steps\FindBlogPostsAsyncSteps.cs" />
+    <Compile Include="Features\Repositories\PageRepository.feature.cs">
+      <DependentUpon>PageRepository.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Helpers\Dummies\DummyClock.cs" />
     <Compile Include="Helpers\Dummies\Dummy.cs" />
     <Compile Include="Helpers\ActualData.cs" />
@@ -130,6 +135,7 @@
     <Compile Include="Helpers\IObjectContainerExtensions.cs" />
     <Compile Include="Helpers\ScenarioHelpers.cs" />
     <Compile Include="Helpers\SetupSteps.cs" />
+    <Compile Include="Features\Repositories\Steps\PageRepositorySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +155,10 @@
     <None Include="Features\Repositories\BlogPostRepository\PublishAsync.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>PublishAsync.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Repositories\PageRepository.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PageRepository.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
