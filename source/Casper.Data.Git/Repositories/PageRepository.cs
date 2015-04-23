@@ -14,7 +14,7 @@ namespace Casper.Data.Git.Repositories
 {
     public class PageRepository : MarkdownDocumentRepository<Page>, IPageRepository
     {
-        private string _blogDirectory;
+        private readonly string _blogDirectory;
 
         // ReSharper disable once SuggestBaseTypeForParameter
         public PageRepository(IPageRepositorySettings settings, IBlogPostRepositorySettings blogPostRepositorySettings, IGitRepository gitRepository, IYamlMarkdown yamlMarkdown)
@@ -29,6 +29,18 @@ namespace Casper.Data.Git.Repositories
             return Task.Run(() => FindPublishedDirectories(relativeDirectory));
         }
 
+        public Task<IEnumerable<Page>> FindPublishedPagesAsync([AllowNull, AllowEmpty] string relativeDirectory)
+        {
+            // todo: proper async
+            return Task.Run(() => FindPublishedPages(relativeDirectory));
+        }
+
+        public Task<Page> GetPublishedPageAsync(string relativeUri)
+        {
+            // todo: proper async
+            return Task.Run(() => GetPublishedPage(relativeUri));
+        }
+
         private IEnumerable<Directory> FindPublishedDirectories([AllowNull, AllowEmpty] string relativeDirectory)
         {
             var directory = Path.Combine(PublishedDirectory.FullName, relativeDirectory);
@@ -36,12 +48,6 @@ namespace Casper.Data.Git.Repositories
             return System.IO.Directory.EnumerateDirectories(directory)
                 .Where(d => d != _blogDirectory)
                 .Select(d => new Directory(d.Substring(PublishedDirectory.FullName.Length + 1).ToUnixSlashes()));
-        }
-
-        public Task<IEnumerable<Page>> FindPublishedPagesAsync([AllowNull, AllowEmpty] string relativeDirectory)
-        {
-            // todo: proper async
-            return Task.Run(() => FindPublishedPages(relativeDirectory));
         }
 
         private IEnumerable<Page> FindPublishedPages([AllowNull, AllowEmpty] string relativeDirectory)
@@ -53,5 +59,13 @@ namespace Casper.Data.Git.Repositories
                    where page != null
                    select page;
         }
+
+        private Page GetPublishedPage(string relativeUri)
+        {
+            var file = Path.Combine(PublishedDirectory.FullName, relativeUri + ".md").ToDosSlashes();
+
+            return PageSerialization.DeserializeFromFile(file, PublishedDirectory, YamlMarkdown);
+        }
+
     }
 }

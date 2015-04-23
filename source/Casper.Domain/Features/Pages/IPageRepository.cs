@@ -8,5 +8,6 @@ namespace Casper.Domain.Features.Pages
     {
         Task<IEnumerable<Directory>> FindPublishedDirectoriesAsync(string relativeDirectory);
         Task<IEnumerable<Page>> FindPublishedPagesAsync(string relativeDirectory);
+        Task<Page> GetPublishedPageAsync(string relativeUri);
     }
 }

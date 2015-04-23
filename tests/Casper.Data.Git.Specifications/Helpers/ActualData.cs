@@ -1,4 +1,5 @@
-﻿using Casper.Domain.Features.BlogPosts;
+﻿using System.Threading.Tasks;
+using Casper.Domain.Features.BlogPosts;
 using Casper.Domain.Features.Pages;
 
 namespace Casper.Data.Git.Specifications.Helpers
@@ -10,5 +11,6 @@ namespace Casper.Data.Git.Specifications.Helpers
         public BlogPost BlogPost { get; set; }
         public Page[] Pages { get; set; }
         public Directory[] Directories { get; set; }
+        public Page Page { get; set; }
     }
 }

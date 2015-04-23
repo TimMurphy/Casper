@@ -72,5 +72,23 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         {
             _actual.Directories.Length.Should().Be(0);
         }
+
+        [Given(@"relativeUri is '(.*)'")]
+        public void GivenRelativeUriIs(string relativeUri)
+        {
+            _given.RelativeUri = relativeUri;
+        }
+
+        [When(@"I call GetPublishedPageAsync\(relativeUri\)")]
+        public void WhenICallGetPublishedPageAsyncRelativeUri()
+        {
+            _actual.Page = _pageRepository.GetPublishedPageAsync(_given.RelativeUri).Result;
+        }
+
+        [Then(@"the page should be returned")]
+        public void ThenThePageShouldBeReturned()
+        {
+            _actual.Page.RelativeUri.Should().Be(_given.RelativeUri);
+        }
     }
 }

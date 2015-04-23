@@ -50,6 +50,8 @@ namespace Casper.Data.Git.Specifications.Helpers
             set { _directory = value == "empty string" ? "" : value; }
         }
 
+        public string RelativeUri { get; set; }
+
         public string GetBlogUri()
         {
             var uri = string.Format("{0}/{1}/{2}", "blog", Published.ToUniversalTime().DateTime.ToFolders(), _slugFactory.CreateSlug(Title));
