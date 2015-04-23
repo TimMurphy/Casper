@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
 using Casper.Domain.Features.Pages;
+using NullGuard;
 
 namespace Casper.Data.Git.Infrastructure
 {
     public static class PageSerialization
     {
+        [return: AllowNull]
         public static Page TryDeserializeFromFile(string file, DirectoryInfo publishedDirectory, IYamlMarkdown yamlMarkdown)
         {
             try
