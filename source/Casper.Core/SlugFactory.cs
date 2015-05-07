@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Casper.Domain.Infrastructure
+namespace Casper.Core
 {
     public class SlugFactory : ISlugFactory
     {

@@ -70,7 +70,6 @@
     <Compile Include="Features\Pages\IPageRepository.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Infrastructure\IPagination.cs" />
-    <Compile Include="Infrastructure\ISlugFactory.cs" />
     <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />
     <Compile Include="Infrastructure\Messaging\DuplicateCommandHandlerException.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocument.cs" />
     <Compile Include="Infrastructure\MarkdownDocuments\MarkdownDocumentCommandHandler.cs" />
     <Compile Include="Infrastructure\Pagination.cs" />
-    <Compile Include="Infrastructure\SlugFactory.cs" />
     <Compile Include="IPaginationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

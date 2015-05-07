@@ -1,4 +1,4 @@
-﻿namespace Casper.Domain.Infrastructure
+﻿namespace Casper.Core
 {
     public interface ISlugFactory
     {
