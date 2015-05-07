@@ -7,9 +7,8 @@ namespace Casper.Domain.Features.BlogPosts
     public class BlogPostCommandHandler : MarkdownDocumentCommandHandler<BlogPost, PublishBlogPost, PublishedBlogPost>
     {
         public BlogPostCommandHandler(IBlogPostRepository blogPostRepository)
-            : base(blogPostRepository, publishBlogPost => new BlogPost(publishBlogPost) , publishBlogPost => new PublishedBlogPost(publishBlogPost)  )
+            : base(blogPostRepository, publishBlogPost => new BlogPost(publishBlogPost), publishBlogPost => new PublishedBlogPost(publishBlogPost))
         {
-
         }
     }
 }
