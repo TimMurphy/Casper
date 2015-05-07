@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Casper.Core;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.Authors;
-using Casper.Domain.Infrastructure;
 using FakeItEasy;
 using FakeItEasy.ExtensionSyntax.Full;
 using OpenMagic;

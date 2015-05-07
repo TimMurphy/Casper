@@ -1,4 +1,4 @@
-﻿using Casper.Domain.Infrastructure;
+﻿using Casper.Core;
 using Casper.Domain.Specifications.Helpers;
 using FluentAssertions;
 using TechTalk.SpecFlow;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BoDi;
+using Casper.Core;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
 using Casper.Domain.Features.BlogPosts;
