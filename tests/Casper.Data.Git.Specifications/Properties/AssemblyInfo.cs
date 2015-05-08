@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Anotar.NLog;
+using Anotar.LibLog;
 
 [assembly: AssemblyTitle("Casper.Data.Git.Features")]
 [assembly: AssemblyDescription("Specifications for Casper.Data.Git project.")]

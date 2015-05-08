@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using Anotar.NLog;
+using Anotar.LibLog;
 using BoDi;
 using Casper.Data.Git.Git;
 using Casper.Data.Git.Repositories;
