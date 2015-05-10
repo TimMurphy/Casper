@@ -63,32 +63,36 @@ namespace Casper.Data.Git.Specifications.Helpers
         {
             var directory = new DirectoryInfo(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
 
-            CleanUpActions.Add(() =>
-            {
-                const int maximumAttempts = 3;
-
-                for (var attempt = 0; attempt < maximumAttempts; attempt++)
-                {
-                    try
-                    {
-                        directory.ForceDeleteIfExists();
-                        break;
-                    }
-                    catch (Exception exception)
-                    {
-                        if (attempt == maximumAttempts - 1)
-                        {
-                            LogTo.ErrorException(string.Format("Could not delete directory '{0}'. FINAL ATTEMPT.", directory.FullName), exception);
-                        }
-                        else
-                        {
-                            LogTo.WarnException(string.Format("Could not delete directory '{0}'. Attempt '{1}'.", directory.FullName, attempt + 1), exception);
-                        }
-                    }
-                }
-            });
+            CleanUpActions.Add(() => DeleteSelfDeletingDirectory(directory));
 
             return directory;
+        }
+
+        private static void DeleteSelfDeletingDirectory(DirectoryInfo directory)
+        {
+            LogTo.Trace("DeleteSelfDeletingDirectory(directory: {0})", directory.FullName);
+
+            const int maximumAttempts = 3;
+
+            for (var attempt = 0; attempt < maximumAttempts; attempt++)
+            {
+                try
+                {
+                    directory.ForceDeleteIfExists();
+                    break;
+                }
+                catch (Exception exception)
+                {
+                    if (attempt == maximumAttempts - 1)
+                    {
+                        LogTo.ErrorException(string.Format("Could not delete directory '{0}'. FINAL ATTEMPT.", directory.FullName), exception);
+                    }
+                    else
+                    {
+                        LogTo.WarnException(string.Format("Could not delete directory '{0}'. Attempt '{1}'.", directory.FullName, attempt + 1), exception);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -110,7 +114,7 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         private IPageRepository PageRepositoryFactory()
         {
-            return new PageRepository(new PageRepositorySettings(_repositoryDirectory.Value), new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"),  GitRepository, Dummy.YamlMarkdown());
+            return new PageRepository(new PageRepositorySettings(_repositoryDirectory.Value), new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

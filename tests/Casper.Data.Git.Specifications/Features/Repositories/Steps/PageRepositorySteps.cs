@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Casper.Data.Git.Specifications.Helpers;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Features.BlogPosts;
@@ -57,7 +58,10 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
         [Then(@"pages with the following relative uris should be returned")]
         public void ThenPagesWithTheFollowingRelativeUrisShouldBeReturned(Table table)
         {
-            _actual.Pages.Select(p => p.RelativeUri).ShouldAllBeEquivalentTo(table.Rows.Select(r => r[0]));
+            var actualRelativeUris = _actual.Pages.Select(p => p.RelativeUri).ToArray();
+            var expectedRelativeUris = table.Rows.Select(r => r[0]).ToArray();
+
+            actualRelativeUris.ShouldAllBeEquivalentTo(expectedRelativeUris);
         }
 
         [Then(@"the following directories should be returned")]

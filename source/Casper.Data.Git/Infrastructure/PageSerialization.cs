@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Anotar.LibLog;
 using Casper.Domain.Features.Pages;
 using NullGuard;
 
@@ -10,14 +11,22 @@ namespace Casper.Data.Git.Infrastructure
         [return: AllowNull]
         public static Page TryDeserializeFromFile(string file, DirectoryInfo publishedDirectory, IYamlMarkdown yamlMarkdown)
         {
+            LogTo.Trace("TryDeserializeFromFile(file: {0}, publishedDirectory: {1}, yamlMarkdown)", file, publishedDirectory.FullName);
+
+            Page page;
+
             try
             {
-                return DeserializeFromFile(file, publishedDirectory, yamlMarkdown);
+                page = DeserializeFromFile(file, publishedDirectory, yamlMarkdown);
+                LogTo.Debug("Deserialized {0}.", file);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return null;
+                LogTo.DebugException(string.Format("Error while deserializing {0}.\n\n{1}", file, exception), exception);
+                page = null;
             }
+
+            return page;
         }
         
         public static Page DeserializeFromFile(string file, DirectoryInfo publishedDirectory, IYamlMarkdown yamlMarkdown)

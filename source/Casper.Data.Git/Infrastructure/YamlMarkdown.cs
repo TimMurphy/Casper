@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Anotar.LibLog;
 using Casper.Data.Git.Infrastructure.Metadata;
+using NullGuard;
 using OpenMagic.Extensions;
 using YamlDotNet.Serialization;
 
@@ -16,15 +18,22 @@ namespace Casper.Data.Git.Infrastructure
             return string.Format("---\r\n{0}\r\n---\r\n{1}", yaml, markdown);
         }
 
-        public void Deserialize(string markdownWithFrontMatter, out MarkdownMetadata markdownMetadata, out string markdown)
+        // AllowNull is required on the out parameters otherwise PEVerify on the resulting DLL fails with error:
+        // [IL]: Error: [C:\Users\Tim\Code\Tim Murphy\Casper\tests\Casper.Data.Git.Specifications\bin\Debug\Casper.Data.Git.dll : Casper.Data.Git.Infrastructure.YamlMarkdown::Deserialize][offset 0x0000008B] Branch out of finally block.
+        // 1 Error(s) Verifying Casper.Data.Git.dll
+        // todo: report issue to Simon Cropp, NullGuard.Fody
+        public void Deserialize(string markdownWithFrontMatter, [AllowNull] out MarkdownMetadata markdownMetadata, [AllowNull] out string markdown)
         {
+            LogTo.Trace("Deserialize(markdownWithFrontMatter: {0}, markdownMetadata, markdown)", markdownWithFrontMatter);
+
             string metaDataText;
 
             SplitMarkdownWithFrontMatter(markdownWithFrontMatter, out metaDataText, out markdown);
 
             using (var textReader = new StringReader(metaDataText))
             {
-                markdownMetadata = new Deserializer().Deserialize<MarkdownMetadata>(textReader);
+                var deserializer = new Deserializer();
+                markdownMetadata = deserializer.Deserialize<MarkdownMetadata>(textReader);
             }
         }
 
