@@ -1,6 +1,7 @@
 using System.Web;
 using Casper.Domain.Features.Files.Commands;
 using Casper.Domain.Infrastructure.Messaging;
+using EmptyStringGuard;
 
 namespace Casper.Domain.Features.Files.Events
 {
@@ -13,6 +14,7 @@ namespace Casper.Domain.Features.Files.Events
             UrlFriendlyFileNameWithExtension = command.UrlFriendlyFileNameWithExtension;
         }
 
+        [AllowEmpty]
         public string RelativeDirectory { get; private set; }
         public HttpPostedFileBase File { get; private set; }
         public string UrlFriendlyFileNameWithExtension { get; private set; }
