@@ -9,7 +9,7 @@ namespace Casper.Data.Git.Repositories
     public class FileRepository : FileRepositoryBase<UploadedFile>, IFileRepository
     {
         // ReSharper disable once SuggestBaseTypeForParameter
-        public FileRepository(IFileRepositorySettings settings, IGitRepository gitRepository) 
+        public FileRepository(IFileRepositorySettings settings, IGitRepository gitRepository)
             : base(gitRepository, settings.PublishedDirectory)
         {
         }
@@ -34,7 +34,14 @@ namespace Casper.Data.Git.Repositories
                 throw new Exception("Expected directory would not be null.");
             }
 
-            localFile.Directory.Create();
+            if (localFile.Exists)
+            {
+                localFile.Delete();
+            }
+            else
+            {
+                localFile.Directory.Create();
+            }
 
             file.PostedFile.SaveAs(localFile.FullName);
         }
