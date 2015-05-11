@@ -33,10 +33,18 @@ namespace Casper.Data.Git.Repositories
             {
                 await GitRepository.CommitAsync(GitBranches.Master, file.RelativePath, commitComment, file.Author);
             }
-            catch (Exception)
+            catch (Exception firstException)
             {
-                UndoWriteFile(file);
-                throw;
+                string exMessage = $"Could not commit '{file.RelativePath}'.";
+                try
+                {
+                    UndoWriteFile(file);
+                    throw new Exception(exMessage, firstException);
+                }
+                catch (Exception secondException)
+                {
+                    throw new Exception(exMessage.TrimEnd('.') + " or undo writes.", new AggregateException(firstException, secondException));
+                }
             }
         }
 
