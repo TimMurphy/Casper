@@ -1,1 +1,1 @@
-.$PSScriptRoot\Build.ps1
+powershell -noprofile -noninteractive -file $PSScriptRoot\Build.ps1
