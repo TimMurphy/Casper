@@ -9,6 +9,6 @@ namespace Casper.Data.Git.Repositories
             PublishedDirectory = publishedDirectory;
         }
 
-        public DirectoryInfo PublishedDirectory { get; private set; }
+        public DirectoryInfo PublishedDirectory { get; }
     }
 }

@@ -29,6 +29,11 @@ namespace Casper.Data.Git.Repositories
             return Task.FromResult(FindPublishedBlogPosts(pagination));
         }
 
+        public override Task PublishAsync(BlogPost markdownDocument)
+        {
+            return PublishAsync(markdownDocument, $"Published blog post '{markdownDocument.Title}'.");
+        }
+
         private IEnumerable<BlogPost> FindPublishedBlogPosts(IPagination pagination)
         {
             // The query uses two select statements so BlogPostSerialization.DeserializeFromFile is only called for requested files.

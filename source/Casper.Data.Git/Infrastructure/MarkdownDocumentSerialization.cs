@@ -18,7 +18,7 @@ namespace Casper.Data.Git.Infrastructure
             IYamlMarkdown yamlMarkdown)
             where TDocument : MarkdownDocument
         {
-            LogTo.Trace("Deserialize<{0}>(documentFactory, relativeUri: {1}, markdownWithFrontMatter: {2}, yamlMarkdown)", typeof(TDocument), relativeUri, markdownWithFrontMatter);
+            LogTo.Trace("Deserialize<{0}>(documentFactory, relativeUri: {1}, markdownWithFrontMatter: {2}, yamlMarkdown)", typeof (TDocument), relativeUri, markdownWithFrontMatter);
 
             MarkdownMetadata metadata;
             string markdown;

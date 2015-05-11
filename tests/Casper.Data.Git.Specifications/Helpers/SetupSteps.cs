@@ -1,9 +1,7 @@
 ﻿using BoDi;
 using Casper.Core;
 using Casper.Data.Git.Infrastructure;
-using Casper.Data.Git.Repositories;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
-using Casper.Domain.Infrastructure;
 using Casper.Domain.Specifications.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using TechTalk.SpecFlow;

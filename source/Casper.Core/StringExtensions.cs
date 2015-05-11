@@ -1,9 +1,15 @@
 ﻿using System.IO;
+using OpenMagic.Extensions;
 
 namespace Casper.Core
 {
     public static class StringExtensions
     {
+        public static string RemoveExtension(this string pathWithExtension)
+        {
+            return pathWithExtension.TextBeforeLast(".", pathWithExtension);
+        }
+
         public static string ToDosSlashes(this string value)
         {
             return value.Replace("/", "\\");

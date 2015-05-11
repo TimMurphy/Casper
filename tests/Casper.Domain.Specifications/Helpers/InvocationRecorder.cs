@@ -9,20 +9,23 @@ namespace Casper.Domain.Specifications.Helpers
     public class InvocationRecorder : IInterceptor
     {
         private readonly List<IInvocation> _invocations = new List<IInvocation>();
+        public IEnumerable<IInvocation> Invocations => _invocations.AsEnumerable();
 
-        public IEnumerable<IInvocation> Invocations
+        public void Intercept(IInvocation invocation)
         {
-            get { return _invocations.AsEnumerable(); }
+            _invocations.Add(invocation);
+
+            invocation.Proceed();
         }
 
         public IEnumerable<IInvocation> CallsTo<T>()
         {
-            return _invocations.Where(i => i.Method.DeclaringType == typeof(T));
+            return _invocations.Where(i => i.Method.DeclaringType == typeof (T));
         }
 
         public IEnumerable<IInvocation> CallsTo<T>(Expression<Action<T>> method)
         {
-            return CallsTo<T>((MethodCallExpression)method.Body);
+            return CallsTo<T>((MethodCallExpression) method.Body);
         }
 
         public IEnumerable<IInvocation> CallsTo<T>(MethodCallExpression method)
@@ -51,13 +54,6 @@ namespace Casper.Domain.Specifications.Helpers
                 default:
                     throw new NotSupportedException(string.Format("NodeType '{0}' is not supported.", expression.NodeType));
             }
-        }
-
-        public void Intercept(IInvocation invocation)
-        {
-            _invocations.Add(invocation);
-
-            invocation.Proceed();
         }
     }
 }

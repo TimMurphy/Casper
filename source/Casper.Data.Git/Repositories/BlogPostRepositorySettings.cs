@@ -10,6 +10,6 @@ namespace Casper.Data.Git.Repositories
             BlogDirectoryName = blogDirectoryName;
         }
 
-        public string BlogDirectoryName { get; private set; }
+        public string BlogDirectoryName { get; }
     }
 }

@@ -67,5 +67,10 @@ namespace Casper.Data.Git.Repositories
             return PageSerialization.DeserializeFromFile(file, PublishedDirectory, YamlMarkdown);
         }
 
+        public override Task PublishAsync(Page markdownDocument)
+        {
+            return PublishAsync(markdownDocument, $"Published page '{markdownDocument.RelativeUri.RemoveExtension()}'.");
+        }
+
     }
 }

@@ -17,9 +17,34 @@ namespace Casper.Data.Git.Git
             _settings = settings;
         }
 
+        public DirectoryInfo WorkingDirectory => _settings.WorkingDirectory;
+
         public Task CommitAsync(GitBranches branch, string relativePath, string comment, Author author)
         {
             return Task.Run(() => Commit(branch, relativePath, comment, author));
+        }
+
+        public Task PushAsync(GitBranches branch)
+        {
+            LogTo.Trace("PushAsync(branch: {0})", branch);
+
+            return Task.Run(() => Push(branch.Name()));
+        }
+
+        public Credentials GitCredentials(string url, [AllowNull] string usernameFromUrl, SupportedCredentialTypes types)
+        {
+            LogTo.Trace("GitCredentials(url: {0}, usernameFromUrl: {1}, types: {2})", url, usernameFromUrl, types);
+
+            if (types != SupportedCredentialTypes.UsernamePassword)
+            {
+                throw new ArgumentOutOfRangeException(nameof(types), types, "Value must be SupportedCredentialTypes.UsernamePassword.");
+            }
+
+            return new UsernamePasswordCredentials
+            {
+                Username = _settings.UserName,
+                Password = _settings.Password
+            };
         }
 
         private void Commit(GitBranches branch, string relativePath, string comment, Author author)
@@ -39,13 +64,6 @@ namespace Casper.Data.Git.Git
             return new Signature(_settings.UserName, _settings.Password, DateTime.UtcNow);
         }
 
-        public Task PushAsync(GitBranches branch)
-        {
-            LogTo.Trace("PushAsync(branch: {0})", branch);
-
-            return Task.Run(() => Push(branch.Name()));
-        }
-
         private void Push(string branchName)
         {
             using (var repo = new Repository(WorkingDirectory.FullName))
@@ -56,33 +74,15 @@ namespace Casper.Data.Git.Git
 
                 LogTo.Debug("Pushing...  {{ remote: {0}, branchRefers: {1}, userName: {2}, password: {3}, when: {4} }}", branch.Remote.Url, branchRefs, _settings.UserName, string.IsNullOrWhiteSpace(_settings.Password) ? "is null or whitespace" : "*****", signature.When);
 
-                var options = new PushOptions()
+                var options = new PushOptions
                 {
                     CredentialsProvider = GitCredentials
                 };
 
-                repo.Network.Push(branch.Remote, branchRefs, pushOptions: options);
+                repo.Network.Push(branch.Remote, branchRefs, options);
 
                 LogTo.Debug("Pushed...  {{ remote: {0}, branchRefers: {1}, userName: {2}, password: {3}, when: {4} }}", branch.Remote, branchRefs, _settings.UserName, string.IsNullOrWhiteSpace(_settings.Password) ? "is null or whitespace" : "*****", signature.When);
             }
         }
-
-        public Credentials GitCredentials(string url, [AllowNull] string usernameFromUrl, SupportedCredentialTypes types)
-        {
-            LogTo.Trace("GitCredentials(url: {0}, usernameFromUrl: {1}, types: {2})", url, usernameFromUrl, types);
-
-            if (types != SupportedCredentialTypes.UsernamePassword)
-            {
-                throw new ArgumentOutOfRangeException("types", types, "Value must be SupportedCredentialTypes.UsernamePassword.");
-            }
-
-            return new UsernamePasswordCredentials
-            {
-                Username = _settings.UserName,
-                Password = _settings.Password
-            };
-        }
-
-        public DirectoryInfo WorkingDirectory { get { return _settings.WorkingDirectory; } }
     }
 }

@@ -1,11 +1,11 @@
 using System;
-using System.IO;
 using Casper.Domain.Features.Authors;
+using Casper.Domain.Features.Files;
 using Casper.Domain.Infrastructure.MarkdownDocuments.Commands;
 
 namespace Casper.Domain.Infrastructure.MarkdownDocuments
 {
-    public abstract class MarkdownDocument
+    public abstract class MarkdownDocument : FileMetadata
     {
         protected MarkdownDocument(PublishMarkdownDocument command)
             : this(command.RelativeUri, command.Title, command.Content, command.Published, command.Author)
@@ -13,23 +13,13 @@ namespace Casper.Domain.Infrastructure.MarkdownDocuments
         }
 
         protected MarkdownDocument(string relativeUri, string title, string content, DateTimeOffset published, Author author)
+            : base(relativeUri, relativeUri + ".md", published, author)
         {
-            RelativeUri = relativeUri;
             Title = title;
             Content = content;
-            Published = published;
-            Author = author;
         }
 
-        public string RelativeUri { get; private set; }
-        public string Title { get; private set; }
-        public string Content { get; private set; }
-        public DateTimeOffset Published { get; private set; }
-        public Author Author { get; private set; }
-
-        public string Name
-        {
-            get { return Path.GetFileNameWithoutExtension(RelativeUri); }
-        }
+        public string Content { get; }
+        public string Title { get; }
     }
 }

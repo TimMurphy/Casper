@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Casper.Core\Properties\CommonAssemblyInfo.cs">
@@ -62,6 +63,10 @@
     <Compile Include="Features\BlogPosts\IBlogPostRepository.cs" />
     <Compile Include="Features\BlogPosts\BlogPost.cs" />
     <Compile Include="Features\BlogPosts\BlogPostCommandHandler.cs" />
+    <Compile Include="Features\Files\Commands\UploadFile.cs" />
+    <Compile Include="Features\Files\Events\UploadedFileEvent.cs" />
+    <Compile Include="Features\Files\FileMetadata.cs" />
+    <Compile Include="Features\Files\UploadedFile.cs" />
     <Compile Include="Features\Pages\Directory.cs" />
     <Compile Include="Features\Pages\Page.cs" />
     <Compile Include="Features\Pages\PageCommandHandler.cs" />
@@ -69,6 +74,8 @@
     <Compile Include="Features\Pages\Events\PublishedPage.cs" />
     <Compile Include="Features\Pages\IPageRepository.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Features\Files\IFileRepository.cs" />
+    <Compile Include="Features\Files\FileCommandHandler.cs" />
     <Compile Include="Infrastructure\IPagination.cs" />
     <Compile Include="Infrastructure\Messaging\CommandBus.cs" />
     <Compile Include="Infrastructure\Messaging\CommandHandlerNotFoundException.cs" />

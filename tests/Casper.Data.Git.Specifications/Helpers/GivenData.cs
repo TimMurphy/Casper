@@ -11,8 +11,8 @@ namespace Casper.Data.Git.Specifications.Helpers
     public class GivenData
     {
         private readonly ISlugFactory _slugFactory;
-        public object Command;
         private string _directory;
+        public object Command;
 
         public GivenData(ISlugFactory slugFactory)
         {
@@ -20,29 +20,9 @@ namespace Casper.Data.Git.Specifications.Helpers
             Git = new GitData();
         }
 
-        public PublishBlogPost PublishBlogPostCommand
-        {
-            get { return (PublishBlogPost) Command; }
-        }
-
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public DateTimeOffset Published { get; set; }
-        public GitData Git { get; set; }
         public Author Author { get; set; }
         public BlogPost BlogPost { get; set; }
-        public DateTime PublishedFirstDate { get; set; }
-        public DateTime PublishedLastDate { get; set; }
-        public string TitleFormat { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-
-        public IPagination Pagination
-        {
-            get { return new Pagination(PageNumber, PageSize); }
-        }
-
-        public string MarkdownWithFrontMatter { get; set; }
+        public string Content { get; set; }
 
         public string Directory
         {
@@ -50,7 +30,18 @@ namespace Casper.Data.Git.Specifications.Helpers
             set { _directory = value == "empty string" ? "" : value; }
         }
 
+        public GitData Git { get; set; }
+        public string MarkdownWithFrontMatter { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public IPagination Pagination => new Pagination(PageNumber, PageSize);
+        public PublishBlogPost PublishBlogPostCommand => (PublishBlogPost) Command;
+        public DateTimeOffset Published { get; set; }
+        public DateTime PublishedFirstDate { get; set; }
+        public DateTime PublishedLastDate { get; set; }
         public string RelativeUri { get; set; }
+        public string Title { get; set; }
+        public string TitleFormat { get; set; }
 
         public string GetBlogUri()
         {
@@ -61,10 +52,10 @@ namespace Casper.Data.Git.Specifications.Helpers
 
         public class GitData
         {
-            public GitBranches Branch { get; set; }
-            public string RelativePath { get; set; }
-            public string Comment { get; set; }
             public Author Author { get; set; }
+            public GitBranches Branch { get; set; }
+            public string Comment { get; set; }
+            public string RelativePath { get; set; }
         }
     }
 }

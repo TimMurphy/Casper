@@ -21,12 +21,12 @@ namespace Casper.Data.Git.Specifications.Helpers
     public class ScenarioHelpers
     {
         private readonly Lazy<IBlogPostRepository> _blogPostRepository;
-        private readonly Lazy<IPageRepository> _pageRepository;
         private readonly Lazy<IGitRepository> _gitRepository;
+        private readonly Lazy<IPageRepository> _pageRepository;
+        private readonly Lazy<DirectoryInfo> _repositoryDirectory;
         public readonly List<Action> CleanUpActions = new List<Action>();
         public DirectoryInfo GitCloneDirectory;
         public DirectoryInfo GitRemoteDirectory;
-        private readonly Lazy<DirectoryInfo> _repositoryDirectory;
 
         public ScenarioHelpers(IObjectContainer objectContainer)
         {
@@ -36,22 +36,22 @@ namespace Casper.Data.Git.Specifications.Helpers
             _repositoryDirectory = new Lazy<DirectoryInfo>(CreateSelfDeletingDirectory);
         }
 
-        public IGitRepository GitRepository
-        {
-            get { return _gitRepository.Value; }
-        }
-
-        public IBlogPostRepository BlogPostRepository
-        {
-            get { return _blogPostRepository.Value; }
-        }
-
-        public IPageRepository PageRepository
-        {
-            get { return _pageRepository.Value; }
-        }
-
+        public IBlogPostRepository BlogPostRepository => _blogPostRepository.Value;
         public DirectoryInfo BlogPostRepositoryWorkingDirectory { get; private set; }
+        public IGitRepository GitRepository => _gitRepository.Value;
+        public IPageRepository PageRepository => _pageRepository.Value;
+
+        /// <summary>
+        ///     Runs the clean up actions in <see cref="CleanUpActions" />.
+        /// </summary>
+        [AfterScenario]
+        public void AfterScenario()
+        {
+            foreach (var cleanUpAction in CleanUpActions)
+            {
+                cleanUpAction();
+            }
+        }
 
         /// <summary>
         ///     Creates a temporary directory that will be deleted after scenario has completed.
@@ -66,6 +66,11 @@ namespace Casper.Data.Git.Specifications.Helpers
             CleanUpActions.Add(() => DeleteSelfDeletingDirectory(directory));
 
             return directory;
+        }
+
+        private IBlogPostRepository BlogPostRepositoryFactory()
+        {
+            return new BlogPostRepository(new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
         }
 
         private static void DeleteSelfDeletingDirectory(DirectoryInfo directory)
@@ -93,28 +98,6 @@ namespace Casper.Data.Git.Specifications.Helpers
                     }
                 }
             }
-        }
-
-        /// <summary>
-        ///     Runs the clean up actions in <see cref="CleanUpActions" />.
-        /// </summary>
-        [AfterScenario]
-        public void AfterScenario()
-        {
-            foreach (var cleanUpAction in CleanUpActions)
-            {
-                cleanUpAction();
-            }
-        }
-
-        private IBlogPostRepository BlogPostRepositoryFactory()
-        {
-            return new BlogPostRepository(new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
-        }
-
-        private IPageRepository PageRepositoryFactory()
-        {
-            return new PageRepository(new PageRepositorySettings(_repositoryDirectory.Value), new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter
@@ -151,6 +134,11 @@ namespace Casper.Data.Git.Specifications.Helpers
             LogTo.Trace("InitGitRepository took {0:N0}ms.", sw.ElapsedMilliseconds);
 
             return GitCloneDirectory;
+        }
+
+        private IPageRepository PageRepositoryFactory()
+        {
+            return new PageRepository(new PageRepositorySettings(_repositoryDirectory.Value), new BlogPostRepositorySettings(_repositoryDirectory.Value, "blog"), GitRepository, Dummy.YamlMarkdown());
         }
     }
 }

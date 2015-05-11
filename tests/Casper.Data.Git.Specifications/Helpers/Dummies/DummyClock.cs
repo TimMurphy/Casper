@@ -10,11 +10,7 @@ namespace Casper.Data.Git.Specifications.Helpers.Dummies
             UtcNowFactory = () => DateTime.UtcNow;
         }
 
+        public DateTime UtcNow => UtcNowFactory();
         public static Func<DateTime> UtcNowFactory { get; set; }
-
-        public DateTime UtcNow
-        {
-            get { return UtcNowFactory(); }
-        }
     }
 }

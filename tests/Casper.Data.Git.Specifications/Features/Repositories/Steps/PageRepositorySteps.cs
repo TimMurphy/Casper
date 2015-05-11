@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Casper.Data.Git.Specifications.Helpers;
 using Casper.Data.Git.Specifications.Helpers.Dummies;
 using Casper.Domain.Features.BlogPosts;
@@ -12,10 +11,10 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
     [Binding]
     public class PageRepositorySteps
     {
-        private readonly GivenData _given;
         private readonly ActualData _actual;
-        private readonly IPageRepository _pageRepository;
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly GivenData _given;
+        private readonly IPageRepository _pageRepository;
 
         public PageRepositorySteps(GivenData given, ActualData actual, ScenarioHelpers scenarioHelpers)
         {
@@ -25,16 +24,16 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             _blogPostRepository = scenarioHelpers.BlogPostRepository;
         }
 
-        [Given(@"a published page where RelativeUri is '(.*)'")]
-        public void GivenAPublishedPageWhereRelativeUriIs(string relativeUri)
-        {
-            _pageRepository.PublishAsync(Dummy.Page(relativeUri)).Wait();
-        }
-
         [Given(@"a published blog post where RelativeUri is '(.*)'")]
         public void GivenAPublishedBlogPostWhereRelativeUriIs(string relativeUri)
         {
             _blogPostRepository.PublishAsync(Dummy.BlogPost(relativeUri)).Wait();
+        }
+
+        [Given(@"a published page where RelativeUri is '(.*)'")]
+        public void GivenAPublishedPageWhereRelativeUriIs(string relativeUri)
+        {
+            _pageRepository.PublishAsync(Dummy.Page(relativeUri)).Wait();
         }
 
         [Given(@"directory is '(.*)'")]
@@ -43,25 +42,10 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             _given.Directory = directory;
         }
 
-        [When(@"I call FindPublishedPagesAsync\(directory\)")]
-        public void WhenICallFindPublishedPagesAsyncDirectory()
+        [Given(@"relativeUri is '(.*)'")]
+        public void GivenRelativeUriIs(string relativeUri)
         {
-            _actual.Pages = _pageRepository.FindPublishedPagesAsync(_given.Directory).Result.ToArray();
-        }
-
-        [When(@"I call FindPublishedDirectoriesAsync\(directory\)")]
-        public void WhenICallFindPublishedDirectoriesAsyncDirectory()
-        {
-            _actual.Directories = _pageRepository.FindPublishedDirectoriesAsync(_given.Directory).Result.ToArray();
-        }
-
-        [Then(@"pages with the following relative uris should be returned")]
-        public void ThenPagesWithTheFollowingRelativeUrisShouldBeReturned(Table table)
-        {
-            var actualRelativeUris = _actual.Pages.Select(p => p.RelativeUri).ToArray();
-            var expectedRelativeUris = table.Rows.Select(r => r[0]).ToArray();
-
-            actualRelativeUris.ShouldAllBeEquivalentTo(expectedRelativeUris);
+            _given.RelativeUri = relativeUri;
         }
 
         [Then(@"the following directories should be returned")]
@@ -77,22 +61,37 @@ namespace Casper.Data.Git.Specifications.Features.Repositories.Steps
             _actual.Directories.Length.Should().Be(0);
         }
 
-        [Given(@"relativeUri is '(.*)'")]
-        public void GivenRelativeUriIs(string relativeUri)
+        [Then(@"pages with the following relative uris should be returned")]
+        public void ThenPagesWithTheFollowingRelativeUrisShouldBeReturned(Table table)
         {
-            _given.RelativeUri = relativeUri;
-        }
+            var actualRelativeUris = _actual.Pages.Select(p => p.RelativeUri).ToArray();
+            var expectedRelativeUris = table.Rows.Select(r => r[0]).ToArray();
 
-        [When(@"I call GetPublishedPageAsync\(relativeUri\)")]
-        public void WhenICallGetPublishedPageAsyncRelativeUri()
-        {
-            _actual.Page = _pageRepository.GetPublishedPageAsync(_given.RelativeUri).Result;
+            actualRelativeUris.ShouldAllBeEquivalentTo(expectedRelativeUris);
         }
 
         [Then(@"the page should be returned")]
         public void ThenThePageShouldBeReturned()
         {
             _actual.Page.RelativeUri.Should().Be(_given.RelativeUri);
+        }
+
+        [When(@"I call FindPublishedDirectoriesAsync\(directory\)")]
+        public void WhenICallFindPublishedDirectoriesAsyncDirectory()
+        {
+            _actual.Directories = _pageRepository.FindPublishedDirectoriesAsync(_given.Directory).Result.ToArray();
+        }
+
+        [When(@"I call FindPublishedPagesAsync\(directory\)")]
+        public void WhenICallFindPublishedPagesAsyncDirectory()
+        {
+            _actual.Pages = _pageRepository.FindPublishedPagesAsync(_given.Directory).Result.ToArray();
+        }
+
+        [When(@"I call GetPublishedPageAsync\(relativeUri\)")]
+        public void WhenICallGetPublishedPageAsyncRelativeUri()
+        {
+            _actual.Page = _pageRepository.GetPublishedPageAsync(_given.RelativeUri).Result;
         }
     }
 }

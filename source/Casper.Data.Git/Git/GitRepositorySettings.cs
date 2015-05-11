@@ -14,8 +14,8 @@ namespace Casper.Data.Git.Git
             Password = password;
         }
 
-        public DirectoryInfo WorkingDirectory { get; private set; }
-        public string UserName { get; private set; }
-        public string Password { get; private set; }
+        public string Password { get; }
+        public string UserName { get; }
+        public DirectoryInfo WorkingDirectory { get; }
     }
 }

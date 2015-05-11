@@ -7,9 +7,6 @@ namespace Casper.Core
         /// <summary>
         ///     Gets the current date & time for the current user.
         /// </summary>
-        public DateTime UtcNow
-        {
-            get { return DateTime.UtcNow; }
-        }
+        public DateTime UtcNow => DateTime.UtcNow;
     }
 }

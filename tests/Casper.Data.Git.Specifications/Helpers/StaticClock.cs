@@ -15,6 +15,6 @@ namespace Casper.Data.Git.Specifications.Helpers
             UtcNow = utcNow;
         }
 
-        public DateTime UtcNow { get; private set; }
+        public DateTime UtcNow { get; }
     }
 }

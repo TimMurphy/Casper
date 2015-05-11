@@ -9,11 +9,7 @@ namespace Casper.Domain.Features.Pages
             RelativeUri = relativeUri;
         }
 
-        public string RelativeUri { get; private set; }
-
-        public string Name
-        {
-            get { return RelativeUri.TextAfterLast("/", RelativeUri); }
-        }
+        public string Name => RelativeUri.TextAfterLast("/", RelativeUri);
+        public string RelativeUri { get; }
     }
 }

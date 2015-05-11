@@ -123,9 +123,9 @@
     <Compile Include="Features\Git\Steps\GitRepositorySteps.cs" />
     <Compile Include="Features\Repositories\BlogPostRepository\Steps\FindBlogPostsAsyncSteps.cs" />
     <Compile Include="Features\Repositories\PageRepository.feature.cs">
-      <DependentUpon>PageRepository.feature</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>PageRepository.feature</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Dummies\DummyClock.cs" />
     <Compile Include="Helpers\Dummies\Dummy.cs" />
@@ -180,7 +180,9 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
