@@ -25,7 +25,7 @@ namespace Casper.Core
             return fileNameWithExtension.ToUrlFriendlyFileNameWithExtension(new SlugFactory());
         }
 
-        public static string ToUrlFriendlyFileNameWithExtension(this string fileNameWithExtension, SlugFactory slugFactory)
+        public static string ToUrlFriendlyFileNameWithExtension(this string fileNameWithExtension, ISlugFactory slugFactory)
         {
             var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithExtension);
             var extension = Path.GetExtension(fileNameWithExtension);
