@@ -1,4 +1,6 @@
-﻿Properties {
+﻿$framework = "4.5.1"
+
+Properties {
     # Following properties are solution specific
     $solutionName = "Casper"
     $mainProject = "Casper.Data.Git"
