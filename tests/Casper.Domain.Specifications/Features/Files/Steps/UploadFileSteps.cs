@@ -37,10 +37,10 @@ namespace Casper.Domain.Specifications.Features.Files.Steps
             _given.Command = new UploadFile(uploadedFile, "dummy/relative/directory", "dummy-url-friendly-name.jpg", Dummy.DateTimeOffset(), Dummy.Author());
         }
 
-        [Then(@"a UploadedFileEvent event should be published")]
+        [Then(@"a UploadedFile event should be published")]
         public void ThenAUploadedFileEventShouldBePublished()
         {
-            _actual.PublishedEvents.Count(e => e.GetType() == typeof (UploadedFileEvent)).Should().Be(1, "because the UploadedFileEvent event should have been published by the EventBus");
+            _actual.PublishedEvents.Count(e => e.GetType() == typeof(UploadedFileEvent)).Should().Be(1, "because the UploadedFileEvent event should have been published by the EventBus");
         }
 
         [Then(@"the file should be saved")]
@@ -48,8 +48,8 @@ namespace Casper.Domain.Specifications.Features.Files.Steps
         {
             var methods = _invocationRecorder.CallsTo<IFileRepository>();
             var method = methods.Single(m => m.Method.Name == "PublishAsync");
-            var parameter = (UploadedFile) method.Arguments[0];
-            var command = (UploadFile) _given.Command;
+            var parameter = (UploadedFile)method.Arguments[0];
+            var command = (UploadFile)_given.Command;
 
             parameter.RelativeUri.Should().Be(Path.Combine(command.RelativeDirectory, command.UrlFriendlyFileNameWithExtension));
         }
