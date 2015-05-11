@@ -52,15 +52,19 @@ namespace Casper.Data.Git.Git
         {
             LogTo.Trace("Commit(branch: {0}, relativePath: {1}, comment: {2}, author: {3})", branch, relativePath, comment, author);
 
-            using (var repo = new Repository(WorkingDirectory.FullName))
+            try
             {
-                repo.Checkout(branch.Name());
-                repo.Stage(relativePath);
-
-                if (repo.CanCommit())
+                using (var repo = new Repository(WorkingDirectory.FullName))
                 {
+                    repo.Checkout(branch.Name());
+                    repo.Stage(relativePath);
                     repo.Commit(comment, author.ToGitSignature(), Committer());
                 }
+            }
+            catch (EmptyCommitException)
+            {
+                // We can ignore this exception because there was nothing new to commit.
+                // This can occur if the user uploads the same file.
             }
         }
 
