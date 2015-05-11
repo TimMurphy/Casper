@@ -83,6 +83,7 @@
     <Compile Include="Infrastructure\MarkdownDocumentExtensions.cs" />
     <Compile Include="Infrastructure\Metadata\MarkdownMetadata.cs" />
     <Compile Include="Infrastructure\FileInfoExtensions.cs" />
+    <Compile Include="Infrastructure\RepositoryExtensions.cs" />
     <Compile Include="Infrastructure\YamlMarkdown.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\FileRepository.cs" />

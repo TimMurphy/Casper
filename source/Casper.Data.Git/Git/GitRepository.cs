@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Anotar.LibLog;
+using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.Authors;
 using LibGit2Sharp;
 using NullGuard;
@@ -55,7 +56,11 @@ namespace Casper.Data.Git.Git
             {
                 repo.Checkout(branch.Name());
                 repo.Stage(relativePath);
-                repo.Commit(comment, author.ToGitSignature(), Committer());
+
+                if (repo.CanCommit())
+                {
+                    repo.Commit(comment, author.ToGitSignature(), Committer());
+                }
             }
         }
 
