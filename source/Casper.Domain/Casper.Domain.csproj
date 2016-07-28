@@ -9,9 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Casper.Domain</RootNamespace>
     <AssemblyName>Casper.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>6cd80d9e</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,16 +34,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Anotar.LibLog, Version=0.0.0.0, Culture=neutral, PublicKeyToken=9d5b24f0733c26f7, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Anotar.LibLog.Fody.2.16.3\Lib\Anotar.LibLog.dll</HintPath>
+      <HintPath>..\..\packages\Anotar.LibLog.Fody.2.16.3\lib\Anotar.LibLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="EmptyStringGuard, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EmptyStringGuard.Fody.1.0.6.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\EmptyStringGuard.dll</HintPath>
+      <HintPath>..\..\packages\EmptyStringGuard.Fody.1.0.6.0\lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\EmptyStringGuard.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NullGuard, Version=1.4.1.0, Culture=neutral, PublicKeyToken=1958ac8092168428, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NullGuard.Fody.1.4.1\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
+      <HintPath>..\..\packages\NullGuard.Fody.1.4.1\lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\NullGuard.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OpenMagic, Version=1.21.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -106,12 +108,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.28.3\build\Fody.targets'))" />
   </Target>
