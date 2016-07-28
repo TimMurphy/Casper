@@ -8,7 +8,7 @@ Properties {
     # Following properties are generic
     $solutionFolder = (Resolve-Path ..\).ToString()
     $sln = "$solutionFolder\$solutionName.sln"
-    $specFlowVersion = "1.9.0"
+    $specFlowVersion = "2.1.0"
     $configuration = "Release"
     $packages = "$solutionFolder\packages"
     $nuGet = "$packages\NuGet.exe"
@@ -17,7 +17,7 @@ Properties {
     $specFlowToolsFolder = "$packages\SpecFlow.$specFlowVersion\tools"
     $specFlow = "$specFlowToolsFolder\specflow.exe"
     $tests = "$solutionFolder\tests"
-    $xunit = "$packages\xunit.runners\tools\xunit.console.clr4.exe"
+    $xunit = "$packages\xunit.runner.console\tools\xunit.console.exe"
     $artifacts = "$solutionFolder\artifacts"
     $nuGetArtifacts = "$artifacts\NuGet"
     $binArtifacts = "$artifacts\bin"

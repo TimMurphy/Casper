@@ -73,7 +73,7 @@ namespace Casper.Data.Git.Specifications.Features.Git.Steps
                 commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ConvertTimeFromUtc(_clock));
                 commit.Message.Should().Be(_given.Git.Comment + '\n');
 
-                repository.Head.Name.Should().Be(_given.Git.Branch.ToString().ToLower());
+                repository.Head.FriendlyName.Should().Be(_given.Git.Branch.ToString().ToLower());
             }
         }
 
@@ -105,7 +105,7 @@ namespace Casper.Data.Git.Specifications.Features.Git.Steps
                 commit.Author.When.Should().Be(_given.Git.Author.TimeZoneInfo.ConvertTimeFromUtc(_clock));
                 commit.Message.Should().Be(_given.Git.Comment + '\n');
 
-                repository.Head.Name.Should().Be(_given.Git.Branch.ToString().ToLower());
+                repository.Head.FriendlyName.Should().Be(_given.Git.Branch.ToString().ToLower());
             }
         }
     }

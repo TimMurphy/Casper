@@ -6,7 +6,6 @@ using Casper.Data.Git.Git;
 using Casper.Data.Git.Infrastructure;
 using Casper.Domain.Features.Authors;
 using FakeItEasy;
-using FakeItEasy.ExtensionSyntax.Full;
 using OpenMagic;
 
 namespace Casper.Domain.Specifications.Helpers.Dummies
@@ -20,7 +19,7 @@ namespace Casper.Domain.Specifications.Helpers.Dummies
 
             directory.Create();
 
-            value.CallsTo(c => c.WorkingDirectory).Returns(directory);
+            A.CallTo(() => value.WorkingDirectory).Returns(directory);
 
             return value;
         }

@@ -128,7 +128,7 @@ namespace Casper.Data.Git.Specifications.Helpers
             using (var repository = new Repository(GitCloneDirectory.FullName))
             {
                 repository.Stage("*");
-                repository.Commit("Initialized master branch.", Dummy.Signature());
+                repository.Commit("Initialized master branch.", Dummy.Signature(), Dummy.Signature());
             }
 
             LogTo.Trace("InitGitRepository took {0:N0}ms.", sw.ElapsedMilliseconds);

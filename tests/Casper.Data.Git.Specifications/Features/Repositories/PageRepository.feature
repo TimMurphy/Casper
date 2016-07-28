@@ -10,7 +10,7 @@ Background:
     And a published blog post where RelativeUri is 'blog/2015/12/12/blog-post-1'
     And a published blog post where RelativeUri is 'blog/2015/01/05/blog-post-2'
 
-Scenario: GetPublishedPageAsync
+Scenario: GetPublishedPageAsync for relativeUri
     Given relativeUri is 'a/page-3'
     When I call GetPublishedPageAsync(relativeUri)
     Then the page should be returned
@@ -31,7 +31,7 @@ Scenario: FindPublishedPagesAsync when directory is a
         | a/page-3    |
         | a/page-4    |
 
-Scenario: FindPublishedDirectoriesAsync
+Scenario: FindPublishedDirectoriesAsync when directory is empty string
     Given directory is 'empty string'
     When I call FindPublishedDirectoriesAsync(directory)
     Then the following directories should be returned

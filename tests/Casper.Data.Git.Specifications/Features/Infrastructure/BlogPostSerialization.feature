@@ -1,6 +1,6 @@
 ﻿Feature: BlogPostSerialization
 
-Scenario: Deserialize
+Scenario: Deserialize blog post
 	Given markdownWithFrontMatter is 
 		"""
 		---
